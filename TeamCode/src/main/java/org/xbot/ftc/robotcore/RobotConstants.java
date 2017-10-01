@@ -1,5 +1,8 @@
 package org.xbot.ftc.robotcore;
 
+/**
+ * This Class Is Meant To Keep Naming Consistent Throughout The Robot
+ */
 public abstract class RobotConstants {
     public static final String FRONT_LEFT_DRIVE_MOTOR = "front_left_drive";
     public static final String FRONT_RIGHT_DRIVE_MOTOR = "front_right_drive";
