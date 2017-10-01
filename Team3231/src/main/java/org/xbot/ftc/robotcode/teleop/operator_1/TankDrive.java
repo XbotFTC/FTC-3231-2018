@@ -2,33 +2,21 @@ package org.xbot.ftc.robotcode.teleop.operator_1;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.xbot.ftc.robotcore.RobotConstants;
 import org.xbot.ftc.robotcore.XbotOpMode;
 
-@TeleOp(name="TankDrive", group="Linear Opmode")
+@TeleOp(name="TankDrive", group="OpMode")
 public class TankDrive extends XbotOpMode {
 
-    private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftFrontDrive = null;
     private DcMotor leftRearDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor rightRearDrive = null;
 
     @Override
-    public void runOpMode() {
-        xbotInit();
-        waitForStart();
-
-        while (opModeIsActive()) {
-            xbotLoop();
-        }
-    }
-
-    @Override
-    public void xbotInit() {
-        super.xbotInit();
+    public void init() {
+        super.init();
 
         leftFrontDrive  = hardwareMap.get(DcMotor.class, RobotConstants.FRONT_LEFT_DRIVE_MOTOR);
         leftRearDrive = hardwareMap.get(DcMotor.class, RobotConstants.REAR_LEFT_DRIVE_MOTOR);
@@ -37,7 +25,7 @@ public class TankDrive extends XbotOpMode {
 
         if (leftFrontDrive == null || leftRearDrive == null ||
                 rightFrontDrive == null || rightRearDrive == null) {
-            xbotUpdateTelemetry("Status", "Motor Failed To Initialize");
+            updateTelemetry("Status", "Motor Failed To Initialize");
             return;
         }
 
@@ -46,11 +34,11 @@ public class TankDrive extends XbotOpMode {
         rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         rightRearDrive.setDirection(DcMotor.Direction.REVERSE);
 
-        xbotUpdateTelemetry("Status", "Initialized");
+        updateTelemetry("Status", "Initialized");
     }
 
     @Override
-    public void xbotLoop() {
+    public void loop() {
         final double leftPower = gamepad1.left_stick_y;
         final double rightPower = gamepad1.right_stick_y;
 
@@ -59,6 +47,7 @@ public class TankDrive extends XbotOpMode {
         rightFrontDrive.setPower(rightPower);
         rightRearDrive.setPower(rightPower);
 
-        xbotUpdateTelemetry("Motors", "RightPower (%.2f), LeftPower (%.2f)", leftPower, rightPower);
+        updateTelemetry("Status", "Run Time: " + runtime.toString());
+        updateTelemetry("Motors", "RightPower (%.2f), LeftPower (%.2f)", leftPower, rightPower);
     }
 }
