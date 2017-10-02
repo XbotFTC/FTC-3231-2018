@@ -1,4 +1,4 @@
-package org.xbot.ftc.robotcore.drive;
+package org.xbot.ftc.robotcore.robot_systems.drive;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -10,5 +10,9 @@ public class TankDrive extends DriveManager {
 
     public void drive(double leftPower, double rightPower) {
         super.setMotorPowers(leftPower, rightPower);
+    }
+
+    public void stop() {
+        setMotorPowers(0);
     }
 }

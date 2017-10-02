@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.xbot.ftc.robotcore.XbotOpMode;
-import org.xbot.ftc.robotcore.drive.MecanumDrive;
+import org.xbot.ftc.robotcore.robot_systems.drive.MecanumDrive;
 
 @TeleOp(name="TeleOpMecanumDrive", group="OpMode")
 @Disabled
@@ -31,5 +31,13 @@ public class TeleOpMecanumDrive extends XbotOpMode {
                 mecanumDrive.getFrontRightPower(),
                 mecanumDrive.getRearLeftPower(),
                 mecanumDrive.getRearRightPower());
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
+        updateTelemetry("Status", "Stopping MecanumDrive");
+        mecanumDrive.stop();
+        updateTelemetry("Status", "Stopped MecanumDrive");
     }
 }

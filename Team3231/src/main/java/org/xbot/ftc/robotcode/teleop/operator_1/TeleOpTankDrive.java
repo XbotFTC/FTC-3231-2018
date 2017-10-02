@@ -3,7 +3,7 @@ package org.xbot.ftc.robotcode.teleop.operator_1;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.xbot.ftc.robotcore.XbotOpMode;
-import org.xbot.ftc.robotcore.drive.TankDrive;
+import org.xbot.ftc.robotcore.robot_systems.drive.TankDrive;
 
 @TeleOp(name="TeleOpTankDrive", group="OpMode")
 public class TeleOpTankDrive extends XbotOpMode {
@@ -26,5 +26,13 @@ public class TeleOpTankDrive extends XbotOpMode {
         tankDrive.drive(leftPower, rightPower);
         updateTelemetry("Status", "Run Time: " + runtime.toString());
         updateTelemetry("Motors", "RightPower (%.2f), LeftPower (%.2f)", leftPower, rightPower);
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
+        updateTelemetry("Status", "Stopping TankDrive");
+        tankDrive.stop();
+        updateTelemetry("Status", "Stopped TankDrive");
     }
 }
