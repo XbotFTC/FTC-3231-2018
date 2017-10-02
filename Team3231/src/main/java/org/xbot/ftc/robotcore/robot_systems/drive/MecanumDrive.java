@@ -1,4 +1,4 @@
-package org.xbot.ftc.robotcore.drive;
+package org.xbot.ftc.robotcore.robot_systems.drive;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -26,6 +26,10 @@ public class MecanumDrive extends DriveManager {
         rearRightPower = r * Math.cos(robotAngle) - rightX;
 
         super.setMotorPowers(frontLeftPower, rearLeftPower, frontRightPower, rearRightPower);
+    }
+
+    public void stop() {
+        setMotorPowers(0);
     }
 
     public double getFrontLeftPower() {
