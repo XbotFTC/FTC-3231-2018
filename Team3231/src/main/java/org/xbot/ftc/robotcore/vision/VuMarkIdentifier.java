@@ -3,38 +3,53 @@ package org.xbot.ftc.robotcore.vision;
 
 import android.content.res.Resources;
 
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
-import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import org.xbot.ftc.R;
-import org.xbot.ftc.robotcore.XbotOpMode;
 
-public class VuMarkIdentifier extends XbotOpMode {
+public class VuMarkIdentifier {
+
+    private HardwareMap hardwareMap;
 
     private VuforiaLocalizer vuforia;
     private VuforiaTrackables relicTrackables;
     private VuforiaTrackable relicTemplate;
 
-    @Override
-    public void init() {
-        super.init();
+    public VuMarkIdentifier(HardwareMap hardwareMap,
+                            String vuforiaLicenseKey,
+                            VuforiaLocalizer.CameraDirection cameraDirection) {
+        this.hardwareMap = hardwareMap;
+        init(vuforiaLicenseKey, cameraDirection);
+    }
+
+    public VuMarkIdentifier(HardwareMap hardwareMap,
+                            VuforiaLocalizer.CameraDirection cameraDirection) {
+        this(hardwareMap,
+                Resources.getSystem().getString(R.string.vuforia_license_key),
+                cameraDirection);
+    }
+
+    public VuMarkIdentifier(HardwareMap hardwareMap) {
+        this(hardwareMap,
+                Resources.getSystem().getString(R.string.vuforia_license_key),
+                VuforiaLocalizer.CameraDirection.BACK);
+    }
+
+    private void init(String vuforiaLicenseKey, VuforiaLocalizer.CameraDirection cameraDirection) {
         int cameraMonitorViewId = hardwareMap
                 .appContext
                 .getResources()
                 .getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
-        parameters.vuforiaLicenseKey = Resources.getSystem().getString(R.string.vuforia_license_key);
 
-        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+        parameters.vuforiaLicenseKey = vuforiaLicenseKey;
+        parameters.cameraDirection = cameraDirection;
+
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
         relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
@@ -42,49 +57,15 @@ public class VuMarkIdentifier extends XbotOpMode {
         relicTemplate.setName("relicVuMarkTemplate");
     }
 
-    @Override
-    public void start() {
-        super.start();
-        relicTrackables.activate();
-    }
-
-    @Override
-    public void loop() {
-        RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
-        if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
-
-            telemetry.addData("VuMark", "%s visible", vuMark);
-
-            OpenGLMatrix pose = ((VuforiaTrackableDefaultListener)relicTemplate.getListener()).getPose();
-            telemetry.addData("Pose", format(pose));
-
-            if (pose != null) {
-                VectorF trans = pose.getTranslation();
-                Orientation rot = Orientation.getOrientation(pose, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
-
-                double tX = trans.get(0);
-                double tY = trans.get(1);
-                double tZ = trans.get(2);
-
-                double rX = rot.firstAngle;
-                double rY = rot.secondAngle;
-                double rZ = rot.thirdAngle;
-            }
+    public RelicRecoveryVuMark keepIdentifyingUntilVuMarkIsFound() {
+        RelicRecoveryVuMark vuMark = whereDoesTheRobotPutThisBox();
+        while (vuMark == null) {
+            vuMark = whereDoesTheRobotPutThisBox();
         }
-        else {
-            telemetry.addData("VuMark", "not visible");
-        }
-
-        telemetry.update();
+        return vuMark;
     }
 
-    String format(OpenGLMatrix transformationMatrix) {
-        return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
-    }
-
-    @Override
-    public void stop() {
-        super.stop();
-        relicTrackables.deactivate();
+    public RelicRecoveryVuMark whereDoesTheRobotPutThisBox() {
+        return RelicRecoveryVuMark.from(relicTemplate);
     }
 }
