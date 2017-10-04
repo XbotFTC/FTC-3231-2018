@@ -1,5 +1,8 @@
 package org.xbot.ftc.operatingcode.test;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -8,7 +11,6 @@ import org.xbot.ftc.robotcore.vision.VuMarkIdentifier;
 
 @TeleOp(name = "VisionTesting", group = "Vision")
 public class VisionTesting extends LinearOpMode {
-
 
     private VuMarkIdentifier vuMarkIdentifier;
 
@@ -19,11 +21,11 @@ public class VisionTesting extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            RelicRecoveryVuMark umm = vuMarkIdentifier.whereDoesTheRobotPutThisBox();
-            if (umm != RelicRecoveryVuMark.UNKNOWN) {
-                telemetry.addData("Where To Put Thingy", umm);
-                telemetry.update();
-            }
+            RelicRecoveryVuMark umm = vuMarkIdentifier.keepIdentifyingUntilVuMarkIsFound();
+            Context context = hardwareMap.appContext;
+            Toast.makeText(context, "Where To Place The Thing:" + umm, Toast.LENGTH_SHORT).show();
+            telemetry.addData("Where To Put Thingy", umm);
+            telemetry.update();
         }
     }
 }

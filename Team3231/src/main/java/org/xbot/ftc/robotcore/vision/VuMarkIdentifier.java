@@ -1,8 +1,5 @@
 package org.xbot.ftc.robotcore.vision;
 
-
-import android.content.res.Resources;
-
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -30,13 +27,13 @@ public class VuMarkIdentifier {
     public VuMarkIdentifier(HardwareMap hardwareMap,
                             VuforiaLocalizer.CameraDirection cameraDirection) {
         this(hardwareMap,
-                "AYRMiu//////AAAAGZmM9Oa87U8piVUGpGYX5dESwVZuW/f7WQltWd+uCdHazR57i12CRbho8uN/7yP4ZD+QPIcIJQmeJA+Brbkck0jr/27l2RUrTEn2NnCEVh20vOpUOmDB24sDIbon/bQ7jDGeSyhP98UVQvVjCrOXkNW3P/ptsqFTpZQX9KhIlJ9Yclwh3eCi1sRFRltGi5TI8KEcy4BvOULhGjbMAZVgg88G4KOnqJhJvYTASdzWa2ouLjhzUpsjiT5sJx0i6NJjCeFkS9+uOezIEImeHy3kTUMocN33l/BDomYGHXLh90nErYtnBpI2pofWp9zAobWHBfA2XJfRUHRoD0uf91v0dOq1CY5d8zifJwbjGvlCGB2y",
+                hardwareMap.appContext.getString(R.string.vuforia_license_key),
                 cameraDirection);
     }
 
     public VuMarkIdentifier(HardwareMap hardwareMap) {
         this(hardwareMap,
-                "AYRMiu//////AAAAGZmM9Oa87U8piVUGpGYX5dESwVZuW/f7WQltWd+uCdHazR57i12CRbho8uN/7yP4ZD+QPIcIJQmeJA+Brbkck0jr/27l2RUrTEn2NnCEVh20vOpUOmDB24sDIbon/bQ7jDGeSyhP98UVQvVjCrOXkNW3P/ptsqFTpZQX9KhIlJ9Yclwh3eCi1sRFRltGi5TI8KEcy4BvOULhGjbMAZVgg88G4KOnqJhJvYTASdzWa2ouLjhzUpsjiT5sJx0i6NJjCeFkS9+uOezIEImeHy3kTUMocN33l/BDomYGHXLh90nErYtnBpI2pofWp9zAobWHBfA2XJfRUHRoD0uf91v0dOq1CY5d8zifJwbjGvlCGB2y",
+                hardwareMap.appContext.getString(R.string.vuforia_license_key),
                 VuforiaLocalizer.CameraDirection.BACK);
     }
 
@@ -55,19 +52,20 @@ public class VuMarkIdentifier {
         relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
         relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate");
-
-        relicTrackables.activate();
     }
 
     public RelicRecoveryVuMark keepIdentifyingUntilVuMarkIsFound() {
         RelicRecoveryVuMark vuMark = whereDoesTheRobotPutThisBox();
-        while (vuMark == null) {
+        while (vuMark == RelicRecoveryVuMark.UNKNOWN) {
             vuMark = whereDoesTheRobotPutThisBox();
         }
         return vuMark;
     }
 
     public RelicRecoveryVuMark whereDoesTheRobotPutThisBox() {
-        return RelicRecoveryVuMark.from(relicTemplate);
+        relicTrackables.activate();
+        RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+        relicTrackables.deactivate();
+        return vuMark;
     }
 }
