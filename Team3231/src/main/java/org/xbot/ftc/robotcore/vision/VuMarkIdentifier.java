@@ -30,13 +30,13 @@ public class VuMarkIdentifier {
     public VuMarkIdentifier(HardwareMap hardwareMap,
                             VuforiaLocalizer.CameraDirection cameraDirection) {
         this(hardwareMap,
-                Resources.getSystem().getString(R.string.vuforia_license_key),
+                "AYRMiu//////AAAAGZmM9Oa87U8piVUGpGYX5dESwVZuW/f7WQltWd+uCdHazR57i12CRbho8uN/7yP4ZD+QPIcIJQmeJA+Brbkck0jr/27l2RUrTEn2NnCEVh20vOpUOmDB24sDIbon/bQ7jDGeSyhP98UVQvVjCrOXkNW3P/ptsqFTpZQX9KhIlJ9Yclwh3eCi1sRFRltGi5TI8KEcy4BvOULhGjbMAZVgg88G4KOnqJhJvYTASdzWa2ouLjhzUpsjiT5sJx0i6NJjCeFkS9+uOezIEImeHy3kTUMocN33l/BDomYGHXLh90nErYtnBpI2pofWp9zAobWHBfA2XJfRUHRoD0uf91v0dOq1CY5d8zifJwbjGvlCGB2y",
                 cameraDirection);
     }
 
     public VuMarkIdentifier(HardwareMap hardwareMap) {
         this(hardwareMap,
-                Resources.getSystem().getString(R.string.vuforia_license_key),
+                "AYRMiu//////AAAAGZmM9Oa87U8piVUGpGYX5dESwVZuW/f7WQltWd+uCdHazR57i12CRbho8uN/7yP4ZD+QPIcIJQmeJA+Brbkck0jr/27l2RUrTEn2NnCEVh20vOpUOmDB24sDIbon/bQ7jDGeSyhP98UVQvVjCrOXkNW3P/ptsqFTpZQX9KhIlJ9Yclwh3eCi1sRFRltGi5TI8KEcy4BvOULhGjbMAZVgg88G4KOnqJhJvYTASdzWa2ouLjhzUpsjiT5sJx0i6NJjCeFkS9+uOezIEImeHy3kTUMocN33l/BDomYGHXLh90nErYtnBpI2pofWp9zAobWHBfA2XJfRUHRoD0uf91v0dOq1CY5d8zifJwbjGvlCGB2y",
                 VuforiaLocalizer.CameraDirection.BACK);
     }
 
@@ -55,6 +55,8 @@ public class VuMarkIdentifier {
         relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
         relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate");
+
+        relicTrackables.activate();
     }
 
     public RelicRecoveryVuMark keepIdentifyingUntilVuMarkIsFound() {

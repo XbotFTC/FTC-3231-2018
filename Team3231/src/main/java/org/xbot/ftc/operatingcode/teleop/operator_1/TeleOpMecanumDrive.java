@@ -1,4 +1,4 @@
-package org.xbot.ftc.robotcode.teleop.operator_1;
+package org.xbot.ftc.operatingcode.teleop.operator_1;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;

@@ -25,32 +25,32 @@ public class DriveManager {
                 hardwareMap.get(DcMotor.class, RobotConstants.FRONT_LEFT_DRIVE_MOTOR));
         rightFrontDrive = new XbotDcMotor(
                 hardwareMap.get(DcMotor.class, RobotConstants.FRONT_RIGHT_DRIVE_MOTOR));
-        leftRearDrive = new XbotDcMotor(
-                hardwareMap.get(DcMotor.class, RobotConstants.REAR_LEFT_DRIVE_MOTOR));
-        rightRearDrive = new XbotDcMotor(
-                hardwareMap.get(DcMotor.class, RobotConstants.REAR_RIGHT_DRIVE_MOTOR));
+        //leftRearDrive = new XbotDcMotor(
+         //       hardwareMap.get(DcMotor.class, RobotConstants.REAR_LEFT_DRIVE_MOTOR));
+        //rightRearDrive = new XbotDcMotor(
+        //        hardwareMap.get(DcMotor.class, RobotConstants.REAR_RIGHT_DRIVE_MOTOR));
     }
 
     protected void setMotorPowers(double power) {
         leftFrontDrive.setPower(power);
-        leftRearDrive.setPower(power);
+        //leftRearDrive.setPower(power);
         rightFrontDrive.setPower(power);
-        rightRearDrive.setPower(power);
+        //rightRearDrive.setPower(power);
     }
 
     protected void setMotorPowers(double leftPower, double rightPower) {
         leftFrontDrive.setPower(leftPower);
-        leftRearDrive.setPower(leftPower);
+        //leftRearDrive.setPower(leftPower);
         rightFrontDrive.setPower(rightPower);
-        rightRearDrive.setPower(rightPower);
+        //rightRearDrive.setPower(rightPower);
     }
 
     protected void setMotorPowers(double leftFrontDrivePower, double leftRearDrivePower,
                                double rightFrontDrivePower, double rightRearDrivePower) {
         leftFrontDrive.setPower(leftFrontDrivePower);
-        leftRearDrive.setPower(leftRearDrivePower);
+        //leftRearDrive.setPower(leftRearDrivePower);
         rightFrontDrive.setPower(rightFrontDrivePower);
-        rightRearDrive.setPower(rightRearDrivePower);
+        //rightRearDrive.setPower(rightRearDrivePower);
     }
 
     public XbotDcMotor getLeftFrontDrive() {
