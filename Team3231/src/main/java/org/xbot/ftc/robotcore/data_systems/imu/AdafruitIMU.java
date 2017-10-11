@@ -37,11 +37,9 @@ public class AdafruitIMU {
 
         imu = hardwareMap.get(BNO055IMU.class, XbotRobotConstants.ADAFRUIT_IMU);
         imu.initialize(parameters);
-
-        updateData();
     }
 
-    private void updateData() {
+    public void updateData() {
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC,
                 AxesOrder.ZYX,
                 AngleUnit.DEGREES);
@@ -49,22 +47,18 @@ public class AdafruitIMU {
     }
 
     public String getHeading() {
-        updateData();
         return formatAngle(angles.angleUnit, angles.firstAngle);
     }
 
     public String getRoll() {
-        updateData();
         return formatAngle(angles.angleUnit, angles.secondAngle);
     }
 
     public String getPitch() {
-        updateData();
         return formatAngle(angles.angleUnit, angles.thirdAngle);
     }
 
     public String getGravity() {
-        updateData();
         return gravity.toString();
     }
 
