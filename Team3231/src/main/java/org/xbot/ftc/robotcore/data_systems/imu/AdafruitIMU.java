@@ -9,8 +9,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
-import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 import org.xbot.ftc.robotcore.XbotRobotConstants;
 
 import java.util.Locale;
@@ -19,20 +17,13 @@ public class AdafruitIMU {
 
     private HardwareMap hardwareMap;
 
-    private boolean runIMU;
-
     private BNO055IMU imu;
     private Orientation angles;
     private Acceleration gravity;
 
-    public AdafruitIMU(HardwareMap hardwareMap, boolean runIMU) {
-        this.hardwareMap = hardwareMap;
-        this.runIMU = runIMU;
-        init();
-    }
-
     public AdafruitIMU(HardwareMap hardwareMap) {
-        this(hardwareMap, false);
+        this.hardwareMap = hardwareMap;
+        init();
     }
 
     private void init() {
@@ -48,14 +39,6 @@ public class AdafruitIMU {
         imu.initialize(parameters);
 
         updateData();
-    }
-
-    public void enableIMU() {
-        this.runIMU = true;
-    }
-
-    public void disableIMU() {
-        this.runIMU = false;
     }
 
     private void updateData() {

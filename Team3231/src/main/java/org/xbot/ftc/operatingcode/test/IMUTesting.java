@@ -14,7 +14,7 @@ public class IMUTesting extends XbotOpMode {
     @Override
     public void init() {
         super.init();
-        imu = new AdafruitIMU(hardwareMap, true);
+        imu = new AdafruitIMU(hardwareMap);
     }
 
     @Override
