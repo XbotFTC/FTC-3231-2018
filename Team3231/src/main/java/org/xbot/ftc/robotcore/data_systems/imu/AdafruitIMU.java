@@ -9,11 +9,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.xbot.ftc.robotcore.RobotConstants;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
+import org.xbot.ftc.robotcore.XbotRobotConstants;
 
 import java.util.Locale;
 
-public class AdafruitIMU implements Runnable {
+public class AdafruitIMU {
 
     private HardwareMap hardwareMap;
 
@@ -42,8 +44,10 @@ public class AdafruitIMU implements Runnable {
         parameters.loggingTag = "AdafruitIMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
-        imu = hardwareMap.get(BNO055IMU.class, RobotConstants.ADAFRUIT_IMU);
+        imu = hardwareMap.get(BNO055IMU.class, XbotRobotConstants.ADAFRUIT_IMU);
         imu.initialize(parameters);
+
+        updateData();
     }
 
     public void enableIMU() {
@@ -54,29 +58,30 @@ public class AdafruitIMU implements Runnable {
         this.runIMU = false;
     }
 
-    @Override
-    public void run() {
-        while(runIMU) {
-            angles = imu.getAngularOrientation(AxesReference.INTRINSIC,
-                    AxesOrder.ZYX,
-                    AngleUnit.DEGREES);
-            gravity = imu.getGravity();
-        }
+    private void updateData() {
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC,
+                AxesOrder.ZYX,
+                AngleUnit.DEGREES);
+        gravity = imu.getGravity();
     }
 
     public String getHeading() {
+        updateData();
         return formatAngle(angles.angleUnit, angles.firstAngle);
     }
 
     public String getRoll() {
+        updateData();
         return formatAngle(angles.angleUnit, angles.secondAngle);
     }
 
     public String getPitch() {
+        updateData();
         return formatAngle(angles.angleUnit, angles.thirdAngle);
     }
 
     public String getGravity() {
+        updateData();
         return gravity.toString();
     }
 
