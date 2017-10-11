@@ -1,11 +1,13 @@
 package org.xbot.ftc.operatingcode.teleop.operator_1;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.xbot.ftc.robotcore.XbotOpMode;
 import org.xbot.ftc.robotcore.robot_systems.drive.TankDrive;
 
 @TeleOp(name="TeleOpTankDrive", group="OpMode")
+@Disabled
 public class TeleOpTankDrive extends XbotOpMode {
 
     private TankDrive tankDrive;

@@ -7,7 +7,6 @@ import org.xbot.ftc.robotcore.XbotOpMode;
 import org.xbot.ftc.robotcore.robot_systems.drive.MecanumDrive;
 
 @TeleOp(name="TeleOpMecanumDrive", group="OpMode")
-@Disabled
 public class TeleOpMecanumDrive extends XbotOpMode {
 
     private MecanumDrive mecanumDrive;

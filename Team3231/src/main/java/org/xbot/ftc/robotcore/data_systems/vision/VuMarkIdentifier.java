@@ -1,4 +1,4 @@
-package org.xbot.ftc.robotcore.vision;
+package org.xbot.ftc.robotcore.data_systems.vision;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
