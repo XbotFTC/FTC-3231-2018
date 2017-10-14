@@ -11,41 +11,24 @@ import org.xbot.ftc.R;
 
 public class VuMarkIdentifier {
 
-    private HardwareMap hardwareMap;
+    private static VuMarkIdentifier instance = null;
 
     private VuforiaLocalizer vuforia;
     private VuforiaTrackables relicTrackables;
     private VuforiaTrackable relicTemplate;
 
-    public VuMarkIdentifier(HardwareMap hardwareMap,
-                            String vuforiaLicenseKey,
-                            VuforiaLocalizer.CameraDirection cameraDirection) {
-        this.hardwareMap = hardwareMap;
-        init(vuforiaLicenseKey, cameraDirection);
+    private VuMarkIdentifier() {
     }
 
-    public VuMarkIdentifier(HardwareMap hardwareMap,
-                            VuforiaLocalizer.CameraDirection cameraDirection) {
-        this(hardwareMap,
-                hardwareMap.appContext.getString(R.string.vuforia_license_key),
-                cameraDirection);
-    }
-
-    public VuMarkIdentifier(HardwareMap hardwareMap) {
-        this(hardwareMap,
-                hardwareMap.appContext.getString(R.string.vuforia_license_key),
-                VuforiaLocalizer.CameraDirection.BACK);
-    }
-
-    private void init(String vuforiaLicenseKey, VuforiaLocalizer.CameraDirection cameraDirection) {
+    public void init(HardwareMap hardwareMap) {
         int cameraMonitorViewId = hardwareMap
                 .appContext
                 .getResources()
                 .getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
-        parameters.vuforiaLicenseKey = vuforiaLicenseKey;
-        parameters.cameraDirection = cameraDirection;
+        parameters.vuforiaLicenseKey = hardwareMap.appContext.getString(R.string.vuforia_license_key);
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
@@ -67,5 +50,12 @@ public class VuMarkIdentifier {
         RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
         relicTrackables.deactivate();
         return vuMark;
+    }
+
+    public synchronized static VuMarkIdentifier getInstance() {
+        if (instance == null) {
+            instance = new VuMarkIdentifier();
+        }
+        return instance;
     }
 }

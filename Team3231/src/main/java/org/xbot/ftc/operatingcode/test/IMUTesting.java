@@ -14,12 +14,12 @@ public class IMUTesting extends XbotOpMode {
     @Override
     public void init() {
         super.init();
-        imu = new AdafruitIMU(hardwareMap);
+        imu = AdafruitIMU.getInstance();
+        imu.init(hardwareMap);
     }
 
     @Override
     public void loop() {
-        imu.updateData();
         updateTelemetry("Pitch", imu.getPitch());
     }
 }

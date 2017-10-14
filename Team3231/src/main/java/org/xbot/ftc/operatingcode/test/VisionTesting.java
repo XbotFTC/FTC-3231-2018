@@ -16,7 +16,8 @@ public class VisionTesting extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        vuMarkIdentifier = new VuMarkIdentifier(hardwareMap);
+        vuMarkIdentifier = VuMarkIdentifier.getInstance();
+        vuMarkIdentifier.init(hardwareMap);
 
         waitForStart();
 

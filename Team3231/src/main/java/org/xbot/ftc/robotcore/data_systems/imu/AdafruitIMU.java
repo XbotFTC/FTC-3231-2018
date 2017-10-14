@@ -15,18 +15,16 @@ import java.util.Locale;
 
 public class AdafruitIMU {
 
-    private HardwareMap hardwareMap;
+    private static AdafruitIMU instance = null;
 
     private BNO055IMU imu;
     private Orientation angles;
     private Acceleration gravity;
 
-    public AdafruitIMU(HardwareMap hardwareMap) {
-        this.hardwareMap = hardwareMap;
-        init();
+    private AdafruitIMU() {
     }
 
-    private void init() {
+    public void init(HardwareMap hardwareMap) {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
@@ -37,13 +35,15 @@ public class AdafruitIMU {
 
         imu = hardwareMap.get(BNO055IMU.class, XbotRobotConstants.ADAFRUIT_IMU);
         imu.initialize(parameters);
-    }
 
-    public void updateData() {
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC,
-                AxesOrder.ZYX,
-                AngleUnit.DEGREES);
-        gravity = imu.getGravity();
+        new Thread(new Runnable() {
+            public void run() {
+                angles = imu.getAngularOrientation(AxesReference.INTRINSIC,
+                        AxesOrder.ZYX,
+                        AngleUnit.DEGREES);
+                gravity = imu.getGravity();
+            }
+        }).start();
     }
 
     public String getHeading() {
@@ -68,5 +68,12 @@ public class AdafruitIMU {
 
     private String formatDegrees(double degrees){
         return String.format(Locale.getDefault(), "%.1f", AngleUnit.DEGREES.normalize(degrees));
+    }
+
+    public synchronized static AdafruitIMU getInstance() {
+        if (instance == null) {
+            instance = new AdafruitIMU();
+        }
+        return instance;
     }
 }

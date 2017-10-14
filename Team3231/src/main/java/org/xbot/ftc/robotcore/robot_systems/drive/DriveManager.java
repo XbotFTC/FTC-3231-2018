@@ -1,6 +1,7 @@
 package org.xbot.ftc.robotcore.robot_systems.drive;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.xbot.ftc.robotcore.XbotRobotConstants;
@@ -8,19 +9,20 @@ import org.xbot.ftc.robotcore.XbotDcMotor;
 
 public class DriveManager {
 
-    private HardwareMap hardwareMap;
+    private static DriveManager instance = null;
 
     private XbotDcMotor leftFrontDrive = null;
     private XbotDcMotor rightFrontDrive = null;
     private XbotDcMotor leftRearDrive = null;
     private XbotDcMotor rightRearDrive = null;
 
-    public DriveManager(HardwareMap hardwareMap) {
-        this.hardwareMap = hardwareMap;
-        init();
+    private DriveManager() {
     }
 
-    private void init() {
+    public void init(HardwareMap hardwareMap, Direction leftFrontMotorDirection,
+                                                Direction leftRearMotorDirection,
+                                                Direction rightFrontMotorDirection,
+                                                Direction rightRearMotorDirection) {
         leftFrontDrive  = new XbotDcMotor(
                 hardwareMap.get(DcMotor.class, XbotRobotConstants.FRONT_LEFT_DRIVE_MOTOR));
         rightFrontDrive = new XbotDcMotor(
@@ -29,10 +31,14 @@ public class DriveManager {
                 hardwareMap.get(DcMotor.class, XbotRobotConstants.REAR_LEFT_DRIVE_MOTOR));
         rightRearDrive = new XbotDcMotor(
                 hardwareMap.get(DcMotor.class, XbotRobotConstants.REAR_RIGHT_DRIVE_MOTOR));
-        leftFrontDrive.getMotor().setDirection(DcMotor.Direction.FORWARD);
-        leftRearDrive.getMotor().setDirection(DcMotor.Direction.FORWARD);
-        rightFrontDrive.getMotor().setDirection(DcMotor.Direction.REVERSE);
-        rightRearDrive.getMotor().setDirection(DcMotor.Direction.REVERSE);
+        leftFrontDrive.getMotor().setDirection(leftFrontMotorDirection);
+        leftRearDrive.getMotor().setDirection(leftRearMotorDirection);
+        rightFrontDrive.getMotor().setDirection(rightFrontMotorDirection);
+        rightRearDrive.getMotor().setDirection(rightRearMotorDirection);
+    }
+
+    public void init(HardwareMap hardwareMap) {
+       init(hardwareMap, Direction.FORWARD, Direction.FORWARD, Direction.REVERSE, Direction.REVERSE);
     }
 
     protected void setMotorPowers(double power) {
@@ -71,5 +77,12 @@ public class DriveManager {
 
     public XbotDcMotor getRightRearDrive() {
         return rightRearDrive;
+    }
+
+    public synchronized static DriveManager getInstance() {
+        if (instance == null) {
+            instance = new DriveManager();
+        }
+        return instance;
     }
 }
