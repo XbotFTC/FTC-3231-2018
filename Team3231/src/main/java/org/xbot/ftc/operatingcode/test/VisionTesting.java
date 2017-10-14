@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.xbot.ftc.robotcore.vision.VuMarkIdentifier;
+import org.xbot.ftc.robotcore.data_systems.vision.VuMarkIdentifier;
 
-@TeleOp(name = "VisionTesting", group = "Vision")
+@TeleOp(name = "VisionTesting", group = "Testing")
 public class VisionTesting extends LinearOpMode {
 
     private VuMarkIdentifier vuMarkIdentifier;
