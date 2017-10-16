@@ -15,13 +15,13 @@ import java.util.Locale;
 
 public class BoschIMU {
 
-    private static AdafruitIMU instance = null;
+    private static BoschIMU instance = null;
 
     private BNO055IMU imu;
     private Orientation angles;
     private Acceleration gravity;
 
-    private AdafruitIMU() {
+    private BoschIMU() {
     }
 
     public void init(HardwareMap hardwareMap) {
@@ -70,9 +70,9 @@ public class BoschIMU {
         return String.format(Locale.getDefault(), "%.1f", AngleUnit.DEGREES.normalize(degrees));
     }
 
-    public synchronized static AdafruitIMU getInstance() {
+    public synchronized static BoschIMU getInstance() {
         if (instance == null) {
-            instance = new AdafruitIMU();
+            instance = new BoschIMU();
         }
         return instance;
     }
