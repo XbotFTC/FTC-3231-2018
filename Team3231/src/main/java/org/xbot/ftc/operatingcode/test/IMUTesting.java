@@ -9,7 +9,6 @@ import org.xbot.ftc.robotcore.data_systems.imu.BoschIMU;
 @TeleOp(name="IMUTesting", group="Testing")
 public class IMUTesting extends XbotOpMode {
 
-    private AdafruitIMU imu;
     private BoschIMU imu;
 
     @Override
