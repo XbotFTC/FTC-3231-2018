@@ -13,7 +13,7 @@ import org.xbot.ftc.robotcore.XbotRobotConstants;
 
 import java.util.Locale;
 
-public class AdafruitIMU {
+public class BoschIMU {
 
     private HardwareMap hardwareMap;
 
@@ -21,7 +21,7 @@ public class AdafruitIMU {
     private Orientation angles;
     private Acceleration gravity;
 
-    public AdafruitIMU(HardwareMap hardwareMap) {
+    public BoschIMU(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
         init();
     }
@@ -32,10 +32,10 @@ public class AdafruitIMU {
         parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json";
         parameters.loggingEnabled = true;
-        parameters.loggingTag = "AdafruitIMU";
+        parameters.loggingTag = "BoschIMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
-        imu = hardwareMap.get(BNO055IMU.class, XbotRobotConstants.ADAFRUIT_IMU);
+        imu = hardwareMap.get(BNO055IMU.class, XbotRobotConstants.BOSCH_IMU);
         imu.initialize(parameters);
     }
 
