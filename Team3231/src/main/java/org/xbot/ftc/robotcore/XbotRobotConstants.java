@@ -9,5 +9,6 @@ public abstract class XbotRobotConstants {
     public static final String REAR_LEFT_DRIVE_MOTOR = "rear_left_drive";
     public static final String REAR_RIGHT_DRIVE_MOTOR = "rear_right_drive";
     public static final String ELEVATOR_MOTOR = "elevator_motor";
+    public static final String JEWEL_SMACKER_SERVO = "jewel_servo";
     public static final String BOSCH_IMU = "bosch_imu";
 }

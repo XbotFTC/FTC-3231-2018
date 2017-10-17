@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.xbot.ftc.robotcore.XbotOpMode;
 import org.xbot.ftc.robotcore.data_systems.imu.BoschIMU;
 
-@TeleOp(name="IMUTesting", group="Testing")
+@TeleOp(name="Testing: IMU", group="Testing")
 public class IMUTesting extends XbotOpMode {
 
     private BoschIMU imu;
