@@ -13,6 +13,8 @@ public class VuMarkIdentifier {
 
     private static VuMarkIdentifier instance = null;
 
+    private static boolean initialized = false;
+
     private VuforiaLocalizer vuforia;
     private VuforiaTrackables relicTrackables;
     private VuforiaTrackable relicTemplate;
@@ -21,6 +23,7 @@ public class VuMarkIdentifier {
     }
 
     public void init(HardwareMap hardwareMap) {
+        if (initialized) return;
         int cameraMonitorViewId = hardwareMap
                 .appContext
                 .getResources()
@@ -35,6 +38,7 @@ public class VuMarkIdentifier {
         relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
         relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate");
+        initialized = true;
     }
 
     public RelicRecoveryVuMark keepIdentifyingUntilVuMarkIsFound() {

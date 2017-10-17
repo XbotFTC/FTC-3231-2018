@@ -17,14 +17,16 @@ public class BoschIMU {
 
     private static BoschIMU instance = null;
 
-    private BNO055IMU imu;
-    private Orientation angles;
-    private Acceleration gravity;
+    private static boolean initialized = false;
+
+    private boolean imuEnabled = false;
+    private BoschIMUThread imuThread;
 
     private BoschIMU() {
     }
 
     public void init(HardwareMap hardwareMap) {
+        if (initialized) return;
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
@@ -33,46 +35,117 @@ public class BoschIMU {
         parameters.loggingTag = "BoschIMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
-        imu = hardwareMap.get(BNO055IMU.class, XbotRobotConstants.BOSCH_IMU);
+        BNO055IMU imu = hardwareMap.get(BNO055IMU.class, XbotRobotConstants.BOSCH_IMU);
         imu.initialize(parameters);
 
-        new Thread(new Runnable() {
-            public void run() {
-                angles = imu.getAngularOrientation(AxesReference.INTRINSIC,
-                        AxesOrder.ZYX,
-                        AngleUnit.DEGREES);
-                gravity = imu.getGravity();
-            }
-        }).start();
+        imuThread = BoschIMUThread.getInstance();
+        imuThread.init(imu);
+
+        initialized = true;
+    }
+
+    public void enableImu() {
+        imuEnabled = true;
+        imuThread.enableThread();
+    }
+
+    public void disableImu() {
+        imuEnabled = false;
+        imuThread.disableThread();
     }
 
     public String getHeading() {
-        return formatAngle(angles.angleUnit, angles.firstAngle);
+        return formatAngle(imuThread.getAngles().angleUnit, imuThread.getAngles().firstAngle);
     }
 
     public String getRoll() {
-        return formatAngle(angles.angleUnit, angles.secondAngle);
+        return formatAngle(imuThread.getAngles().angleUnit, imuThread.getAngles().secondAngle);
     }
 
     public String getPitch() {
-        return formatAngle(angles.angleUnit, angles.thirdAngle);
+        return formatAngle(imuThread.getAngles().angleUnit, imuThread.getAngles().thirdAngle);
     }
 
     public String getGravity() {
-        return gravity.toString();
+        return imuThread.getGravity().toString();
     }
 
     private String formatAngle(AngleUnit angleUnit, double angle) {
         return formatDegrees(AngleUnit.DEGREES.fromUnit(angleUnit, angle));
     }
 
-    private String formatDegrees(double degrees){
+    private String formatDegrees(double degrees) {
         return String.format(Locale.getDefault(), "%.1f", AngleUnit.DEGREES.normalize(degrees));
     }
 
     public synchronized static BoschIMU getInstance() {
         if (instance == null) {
             instance = new BoschIMU();
+        }
+        return instance;
+    }
+}
+
+class BoschIMUThread extends Thread {
+
+    private static BoschIMUThread instance = null;
+
+    private static boolean initialized = false;
+
+    private BNO055IMU imu;
+
+    private boolean threadEnabled;
+
+    private Orientation angles;
+    private Acceleration gravity;
+
+    private BoschIMUThread() {
+    }
+
+    public void init(BNO055IMU imu) {
+        if (initialized) return;
+        this.imu = imu;
+        threadEnabled = false;
+        initialized = true;
+    }
+
+    public void enableThread() {
+        boolean previousState = threadEnabled;
+        threadEnabled = true;
+        if (previousState == false) run();
+    }
+
+    public void disableThread() {
+        threadEnabled = false;
+    }
+
+    @Override
+    public void run() {
+        super.run();
+
+        new Thread(new Runnable() {
+            public void run() {
+                while (threadEnabled) {
+                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC,
+                            AxesOrder.ZYX,
+                            AngleUnit.DEGREES);
+                    gravity = imu.getGravity();
+                }
+            }
+        }).start();
+    }
+
+    public Orientation getAngles() {
+        return angles;
+    }
+
+    public Acceleration getGravity() {
+        return gravity;
+    }
+
+    public synchronized static BoschIMUThread getInstance() {
+        if (instance == null) {
+            instance = new BoschIMUThread();
         }
         return instance;
     }

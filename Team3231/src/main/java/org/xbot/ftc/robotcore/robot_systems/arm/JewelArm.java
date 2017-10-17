@@ -9,6 +9,8 @@ public class JewelArm {
 
     private static JewelArm instance = null;
 
+    private static boolean initialized = false;
+
     private Servo jewelArmServo;
     private ArmState currentState;
 
@@ -23,9 +25,11 @@ public class JewelArm {
     }
 
     public void init(HardwareMap hardwareMap) {
+        if (initialized) return;
         jewelArmServo = hardwareMap.get(Servo.class, XbotRobotConstants.JEWEL_SMACKER_SERVO);
         jewelArmServo.setPosition(0);
         currentState = ArmState.UP;
+        initialized = true;
     }
 
     public void toggleArm() {

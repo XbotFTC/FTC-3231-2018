@@ -11,6 +11,8 @@ public class DriveManager {
 
     private static DriveManager instance = null;
 
+    private static boolean initialized = false;
+
     private XbotDcMotor leftFrontDrive = null;
     private XbotDcMotor rightFrontDrive = null;
     private XbotDcMotor leftRearDrive = null;
@@ -23,6 +25,7 @@ public class DriveManager {
                                                 Direction leftRearMotorDirection,
                                                 Direction rightFrontMotorDirection,
                                                 Direction rightRearMotorDirection) {
+        if (initialized) return;
         leftFrontDrive  = new XbotDcMotor(
                 hardwareMap.get(DcMotor.class, XbotRobotConstants.FRONT_LEFT_DRIVE_MOTOR));
         rightFrontDrive = new XbotDcMotor(
@@ -35,6 +38,7 @@ public class DriveManager {
         leftRearDrive.getMotor().setDirection(leftRearMotorDirection);
         rightFrontDrive.getMotor().setDirection(rightFrontMotorDirection);
         rightRearDrive.getMotor().setDirection(rightRearMotorDirection);
+        initialized = true;
     }
 
     public void init(HardwareMap hardwareMap) {
