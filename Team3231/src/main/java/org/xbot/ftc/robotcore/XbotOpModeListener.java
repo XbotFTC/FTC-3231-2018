@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public interface XbotOpModeListener {
     void start(HardwareMap hardwareMap, Telemetry telemetry);
-    void handler(Gamepad gamepad1, Gamepad gamepad2);
+    void handle(Gamepad gamepad1, Gamepad gamepad2);
     void stop();
     void updateTelemetry();
 }

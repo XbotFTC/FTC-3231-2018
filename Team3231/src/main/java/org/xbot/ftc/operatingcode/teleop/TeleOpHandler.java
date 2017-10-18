@@ -3,6 +3,7 @@ package org.xbot.ftc.operatingcode.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.xbot.ftc.operatingcode.TeleOpRegister;
 import org.xbot.ftc.robotcore.XbotOpModeListener;
 
 import java.util.ArrayList;
@@ -20,6 +21,10 @@ public class TeleOpHandler extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        telemetry.addData("Listeners:", "Registering");
+        TeleOpRegister.registerListeners();
+        telemetry.addData("Listeners:", "Registered");
+
         waitForStart();
 
         for (XbotOpModeListener listener : listeners) {
@@ -28,7 +33,7 @@ public class TeleOpHandler extends LinearOpMode {
 
         while (opModeIsActive()) {
             for (XbotOpModeListener listener : listeners) {
-                listener.handler(gamepad1, gamepad2);
+                listener.handle(gamepad1, gamepad2);
             }
         }
 

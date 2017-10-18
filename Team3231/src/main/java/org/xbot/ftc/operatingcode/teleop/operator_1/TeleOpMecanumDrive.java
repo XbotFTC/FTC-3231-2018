@@ -1,6 +1,5 @@
 package org.xbot.ftc.operatingcode.teleop.operator_1;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -8,7 +7,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.xbot.ftc.robotcore.XbotOpModeListener;
 import org.xbot.ftc.robotcore.robot_systems.drive.MecanumDrive;
 
-@TeleOp(name="TeleOpMecanumDrive", group="OpMode")
 public class TeleOpMecanumDrive implements XbotOpModeListener {
 
     private MecanumDrive mecanumDrive;
@@ -21,7 +19,7 @@ public class TeleOpMecanumDrive implements XbotOpModeListener {
     }
 
     @Override
-    public void handler(Gamepad gamepad1, Gamepad gamepad2) {
+    public void handle(Gamepad gamepad1, Gamepad gamepad2) {
         mecanumDrive.drive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
     }
 

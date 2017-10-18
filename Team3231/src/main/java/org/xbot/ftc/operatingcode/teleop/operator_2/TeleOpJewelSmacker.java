@@ -13,7 +13,7 @@ public class TeleOpJewelSmacker implements XbotOpModeListener {
     }
 
     @Override
-    public void handler(Gamepad gamepad1, Gamepad gamepad2) {
+    public void handle(Gamepad gamepad1, Gamepad gamepad2) {
 
     }
 
