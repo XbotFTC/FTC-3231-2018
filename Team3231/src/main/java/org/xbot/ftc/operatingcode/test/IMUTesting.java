@@ -4,7 +4,6 @@ package org.xbot.ftc.operatingcode.test;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.xbot.ftc.robotcore.XbotOpModeListener;
 import org.xbot.ftc.robotcore.data_systems.imu.BoschIMU;
 
 @TeleOp(name="Testing: IMU", group="Testing")

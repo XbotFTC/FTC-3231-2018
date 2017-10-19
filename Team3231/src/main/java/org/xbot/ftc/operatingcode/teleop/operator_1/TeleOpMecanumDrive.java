@@ -4,17 +4,18 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.xbot.ftc.robotcore.XbotOpModeListener;
+import org.xbot.ftc.robotcore.RobotSystemsManager;
+import org.xbot.ftc.robotcore.XbotOperatorSubHandler;
 import org.xbot.ftc.robotcore.robot_systems.drive.MecanumDrive;
 
-public class TeleOpMecanumDrive implements XbotOpModeListener {
+public class TeleOpMecanumDrive extends XbotOperatorSubHandler {
 
     private MecanumDrive mecanumDrive;
     private Telemetry telemetry;
 
     @Override
     public void start(HardwareMap hardwareMap, Telemetry telemetry) {
-        mecanumDrive = new MecanumDrive(hardwareMap);
+        mecanumDrive = RobotSystemsManager.getInstance().getMecanumDrive();
         this.telemetry = telemetry;
     }
 

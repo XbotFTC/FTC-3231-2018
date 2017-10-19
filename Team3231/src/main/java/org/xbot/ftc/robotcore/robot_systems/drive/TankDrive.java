@@ -6,7 +6,7 @@ public class TankDrive {
 
     private DriveManager driveManager;
 
-    public TankDrive(HardwareMap hardwareMap) {
+    protected TankDrive(HardwareMap hardwareMap) {
         driveManager = DriveManager.getInstance();
         driveManager.init(hardwareMap);
     }

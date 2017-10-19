@@ -3,8 +3,7 @@ package org.xbot.ftc.operatingcode.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.xbot.ftc.operatingcode.TeleOpRegister;
-import org.xbot.ftc.robotcore.XbotOpModeListener;
+import org.xbot.ftc.robotcore.XbotTeleOpListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,31 +12,32 @@ import java.util.List;
 @TeleOp(name="Main: TeleOp", group="Main")
 public class TeleOpHandler extends LinearOpMode {
 
-    private static List<XbotOpModeListener> listeners = new ArrayList<>();
+    private static List<XbotTeleOpListener> listeners = new ArrayList<>();
 
-    public static void registerListener(XbotOpModeListener listener) {
+    public static void registerListener(XbotTeleOpListener listener) {
         listeners.add(listener);
     }
 
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry.addData("Listeners:", "Registering");
-        TeleOpRegister.registerListeners();
+        TeleOpSubHandlerRegister.registerListeners();
         telemetry.addData("Listeners:", "Registered");
 
         waitForStart();
 
-        for (XbotOpModeListener listener : listeners) {
+        for (XbotTeleOpListener listener : listeners) {
             listener.start(hardwareMap, telemetry);
         }
 
         while (opModeIsActive()) {
-            for (XbotOpModeListener listener : listeners) {
+            for (XbotTeleOpListener listener : listeners) {
                 listener.handle(gamepad1, gamepad2);
+                listener.updateTelemetry();
             }
         }
 
-        for (XbotOpModeListener listener : listeners) {
+        for (XbotTeleOpListener listener : listeners) {
             listener.stop();
         }
     }

@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public interface XbotOpModeListener {
+public interface XbotTeleOpListener {
     void start(HardwareMap hardwareMap, Telemetry telemetry);
     void handle(Gamepad gamepad1, Gamepad gamepad2);
     void stop();

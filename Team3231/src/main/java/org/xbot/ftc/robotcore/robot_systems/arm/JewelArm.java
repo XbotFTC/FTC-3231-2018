@@ -8,7 +8,6 @@ import org.xbot.ftc.robotcore.XbotRobotConstants;
 public class JewelArm {
 
     private static JewelArm instance = null;
-
     private static boolean initialized = false;
 
     private Servo jewelArmServo;
