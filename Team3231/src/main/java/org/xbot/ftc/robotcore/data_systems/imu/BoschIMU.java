@@ -19,7 +19,6 @@ public class BoschIMU {
 
     private static BoschIMU instance = null;
     private static boolean initialized = false;
-    private static ThreadPoolExecutor executor;
 
     private boolean imuEnabled = false;
     private BoschIMUUpdater imuUpdater;
@@ -40,7 +39,6 @@ public class BoschIMU {
         BNO055IMU imu = hardwareMap.get(BNO055IMU.class, XbotRobotConstants.BOSCH_IMU);
         imu.initialize(parameters);
 
-        executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
         imuUpdater = BoschIMUUpdater.getInstance();
         imuUpdater.init(imu);
 
@@ -55,7 +53,6 @@ public class BoschIMU {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            executor.execute(imuUpdater);
         }
         imuEnabled = true;
     }
@@ -103,6 +100,8 @@ class BoschIMUUpdater implements Runnable {
 
     private static BoschIMUUpdater instance = null;
     private static boolean initialized = false;
+
+    private ThreadPoolExecutor executor;
     private static boolean running = false;
 
     private BNO055IMU imu;
@@ -116,11 +115,13 @@ class BoschIMUUpdater implements Runnable {
     public void init(BNO055IMU imu) {
         if (initialized) return;
         this.imu = imu;
+        executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
         initialized = true;
     }
 
     public void enable() {
         running = true;
+        executor.execute(this);
     }
 
     public void disable() {
