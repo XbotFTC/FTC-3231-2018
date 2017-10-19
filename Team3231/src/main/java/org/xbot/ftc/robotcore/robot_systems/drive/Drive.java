@@ -6,9 +6,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.xbot.ftc.robotcore.XbotRobotConstants;
 
-class DriveManager {
+public class Drive {
 
-    private static DriveManager instance = null;
+    private static Drive instance = null;
     private static boolean initialized = false;
 
     private DcMotor leftFrontDrive = null;
@@ -16,27 +16,25 @@ class DriveManager {
     private DcMotor leftRearDrive = null;
     private DcMotor rightRearDrive = null;
 
-    private DriveManager() {
+    private MecanumDrive mecanumDrive;
+
+    private Drive() {
     }
 
-    public void init(HardwareMap hardwareMap, Direction leftFrontMotorDirection,
-                                                Direction leftRearMotorDirection,
-                                                Direction rightFrontMotorDirection,
-                                                Direction rightRearMotorDirection) {
+    public void init(HardwareMap hardwareMap) {
         if (initialized) return;
         leftFrontDrive  = hardwareMap.get(DcMotor.class, XbotRobotConstants.FRONT_LEFT_DRIVE_MOTOR);
         rightFrontDrive = hardwareMap.get(DcMotor.class, XbotRobotConstants.FRONT_RIGHT_DRIVE_MOTOR);
         leftRearDrive = hardwareMap.get(DcMotor.class, XbotRobotConstants.REAR_LEFT_DRIVE_MOTOR);
         rightRearDrive = hardwareMap.get(DcMotor.class, XbotRobotConstants.REAR_RIGHT_DRIVE_MOTOR);
-        leftFrontDrive.setDirection(leftFrontMotorDirection);
-        leftRearDrive.setDirection(leftRearMotorDirection);
-        rightFrontDrive.setDirection(rightFrontMotorDirection);
-        rightRearDrive.setDirection(rightRearMotorDirection);
-        initialized = true;
-    }
+        leftFrontDrive.setDirection(Direction.FORWARD);
+        leftRearDrive.setDirection(Direction.FORWARD);
+        rightFrontDrive.setDirection(Direction.REVERSE);
+        rightRearDrive.setDirection(Direction.REVERSE);
 
-    public void init(HardwareMap hardwareMap) {
-       init(hardwareMap, Direction.FORWARD, Direction.FORWARD, Direction.REVERSE, Direction.REVERSE);
+        mecanumDrive = new MecanumDrive(this);
+
+        initialized = true;
     }
 
     protected void setMotorPowers(double power) {
@@ -77,9 +75,13 @@ class DriveManager {
         return rightRearDrive;
     }
 
-    public synchronized static DriveManager getInstance() {
+    public MecanumDrive getMecanumDrive() {
+        return mecanumDrive;
+    }
+
+    public synchronized static Drive getInstance() {
         if (instance == null) {
-            instance = new DriveManager();
+            instance = new Drive();
         }
         return instance;
     }

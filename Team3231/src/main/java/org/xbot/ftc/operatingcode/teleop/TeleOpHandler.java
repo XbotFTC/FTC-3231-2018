@@ -3,8 +3,6 @@ package org.xbot.ftc.operatingcode.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.xbot.ftc.robotcore.XbotTeleOpListener;
-
 import java.util.ArrayList;
 import java.util.List;
 

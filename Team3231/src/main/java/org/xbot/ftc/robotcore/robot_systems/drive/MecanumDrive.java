@@ -1,19 +1,16 @@
 package org.xbot.ftc.robotcore.robot_systems.drive;
 
-import com.qualcomm.robotcore.hardware.HardwareMap;
-
 public class MecanumDrive {
 
-    private DriveManager driveManager;
+    private Drive drive;
 
     private double frontLeftPower;
     private double frontRightPower;
     private double rearLeftPower;
     private double rearRightPower;
 
-    public MecanumDrive(HardwareMap hardwareMap) {
-        driveManager = DriveManager.getInstance();
-        driveManager.init(hardwareMap);
+    public MecanumDrive(Drive drive) {
+        this.drive = drive;
     }
 
     /**
@@ -28,11 +25,11 @@ public class MecanumDrive {
         rearLeftPower = r * Math.sin(robotAngle) + rightX;
         rearRightPower = r * Math.cos(robotAngle) - rightX;
 
-        driveManager.setMotorPowers(frontLeftPower, rearLeftPower, frontRightPower, rearRightPower);
+        drive.setMotorPowers(frontLeftPower, rearLeftPower, frontRightPower, rearRightPower);
     }
 
     public void stop() {
-        driveManager.setMotorPowers(0);
+        drive.setMotorPowers(0);
     }
 
     public double getFrontLeftPower() {

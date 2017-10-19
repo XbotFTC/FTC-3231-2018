@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.xbot.ftc.robotcore.XbotOperatorSubHandler;
+import org.xbot.ftc.operatingcode.teleop.XbotOperatorSubHandler;
 import org.xbot.ftc.robotcore.robot_systems.arm.JewelArm;
 
 public class TeleOpJewelSmacker extends XbotOperatorSubHandler {

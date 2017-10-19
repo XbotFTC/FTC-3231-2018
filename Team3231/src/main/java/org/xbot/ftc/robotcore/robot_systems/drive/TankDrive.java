@@ -1,21 +1,18 @@
 package org.xbot.ftc.robotcore.robot_systems.drive;
 
-import com.qualcomm.robotcore.hardware.HardwareMap;
-
 public class TankDrive {
 
-    private DriveManager driveManager;
+    private Drive drive;
 
-    protected TankDrive(HardwareMap hardwareMap) {
-        driveManager = DriveManager.getInstance();
-        driveManager.init(hardwareMap);
+    protected TankDrive(Drive drive) {
+        this.drive = drive;
     }
 
     public void drive(double leftPower, double rightPower) {
-        driveManager.setMotorPowers(leftPower, rightPower);
+        drive.setMotorPowers(leftPower, rightPower);
     }
 
     public void stop() {
-        driveManager.setMotorPowers(0);
+        drive.setMotorPowers(0);
     }
 }

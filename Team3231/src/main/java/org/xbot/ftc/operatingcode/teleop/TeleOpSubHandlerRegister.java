@@ -3,7 +3,6 @@ package org.xbot.ftc.operatingcode.teleop;
 import org.xbot.ftc.operatingcode.teleop.operator_1.TeleOpMecanumDrive;
 import org.xbot.ftc.operatingcode.teleop.operator_2.TeleOpElevator;
 import org.xbot.ftc.operatingcode.teleop.operator_2.TeleOpJewelSmacker;
-import org.xbot.ftc.robotcore.XbotTeleOpListener;
 
 import java.util.ArrayList;
 import java.util.List;
