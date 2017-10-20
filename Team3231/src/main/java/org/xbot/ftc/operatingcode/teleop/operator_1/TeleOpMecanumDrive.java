@@ -15,7 +15,7 @@ public class TeleOpMecanumDrive extends XbotOperatorSubHandler {
 
     @Override
     public void start(HardwareMap hardwareMap, Telemetry telemetry) {
-        mecanumDrive = RobotSystemsManager.getInstance().getMecanumDrive();
+        mecanumDrive = RobotSystemsManager.getInstance().getDrive().getMecanumDrive();
         this.telemetry = telemetry;
     }
 

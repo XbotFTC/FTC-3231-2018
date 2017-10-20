@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.xbot.ftc.robotcore.data_systems.imu.BoschIMU;
 import org.xbot.ftc.robotcore.data_systems.vision.VuMarkIdentifier;
 import org.xbot.ftc.robotcore.robot_systems.arm.JewelArm;
-import org.xbot.ftc.robotcore.robot_systems.drive.MecanumDrive;
+import org.xbot.ftc.robotcore.robot_systems.drive.Drive;
 import org.xbot.ftc.robotcore.robot_systems.elevator.CubeElevator;
 
 public class RobotSystemsManager {
@@ -15,7 +15,7 @@ public class RobotSystemsManager {
 
     private BoschIMU boschIMU;
     private VuMarkIdentifier vuMarkIdentifier;
-    private MecanumDrive mecanumDrive;
+    private Drive drive;
     private JewelArm jewelArm;
     private CubeElevator cubeElevator;
 
@@ -30,7 +30,8 @@ public class RobotSystemsManager {
         vuMarkIdentifier = VuMarkIdentifier.getInstance();
         vuMarkIdentifier.init(hardwareMap);
 
-        mecanumDrive = new MecanumDrive(hardwareMap);
+        drive = Drive.getInstance();
+        drive.init(hardwareMap);
 
         jewelArm = JewelArm.getInstance();
         jewelArm.init(hardwareMap);
@@ -49,8 +50,8 @@ public class RobotSystemsManager {
         return vuMarkIdentifier;
     }
 
-    public MecanumDrive getMecanumDrive() {
-        return mecanumDrive;
+    public Drive getDrive() {
+        return drive;
     }
 
     public JewelArm getJewelArm() {

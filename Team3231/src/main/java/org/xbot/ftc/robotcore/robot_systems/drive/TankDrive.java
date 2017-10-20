@@ -1,6 +1,6 @@
 package org.xbot.ftc.robotcore.robot_systems.drive;
 
-public class TankDrive {
+class TankDrive {
 
     private Drive drive;
 
