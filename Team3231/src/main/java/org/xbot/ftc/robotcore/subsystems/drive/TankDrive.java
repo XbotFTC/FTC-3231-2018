@@ -1,10 +1,10 @@
-package org.xbot.ftc.robotcore.robot_systems.drive;
+package org.xbot.ftc.robotcore.subsystems.drive;
 
 class TankDrive {
 
     private Drive drive;
 
-    protected TankDrive(Drive drive) {
+    private TankDrive(Drive drive) {
         this.drive = drive;
     }
 

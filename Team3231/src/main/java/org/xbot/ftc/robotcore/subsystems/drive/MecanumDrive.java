@@ -1,4 +1,4 @@
-package org.xbot.ftc.robotcore.robot_systems.drive;
+package org.xbot.ftc.robotcore.subsystems.drive;
 
 public class MecanumDrive {
 
@@ -9,7 +9,7 @@ public class MecanumDrive {
     private double rearLeftPower;
     private double rearRightPower;
 
-    public MecanumDrive(Drive drive) {
+    protected MecanumDrive(Drive drive) {
         this.drive = drive;
     }
 

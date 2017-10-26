@@ -3,12 +3,16 @@ package org.xbot.ftc.operatingcode.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.xbot.ftc.robotcore.XbotSubsystemRegister;
+import org.xbot.ftc.robotcore.subsystems.RobotSubsystemManager;
+import org.xbot.ftc.robotcore.subsystems.XbotSubsystem;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
 @TeleOp(name="Main: TeleOp", group="Main")
-public class TeleOpHandler extends LinearOpMode {
+public class XbotTeleOpHandler extends LinearOpMode {
 
     private static List<XbotTeleOpListener> listeners = new ArrayList<>();
 
@@ -19,7 +23,8 @@ public class TeleOpHandler extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry.addData("Listeners:", "Registering");
-        TeleOpSubHandlerRegister.registerListeners();
+        RobotSubsystemManager.getInstance().init(hardwareMap);
+        XbotTeleOpSubHandlerRegister.registerListeners();
         telemetry.addData("Listeners:", "Registered");
 
         waitForStart();

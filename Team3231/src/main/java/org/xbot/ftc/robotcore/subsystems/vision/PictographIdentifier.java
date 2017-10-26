@@ -1,4 +1,4 @@
-package org.xbot.ftc.robotcore.data_systems.vision;
+package org.xbot.ftc.robotcore.subsystems.vision;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -8,20 +8,21 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import org.xbot.ftc.R;
+import org.xbot.ftc.robotcore.subsystems.XbotSubsystem;
 
-public class VuMarkIdentifier {
+public class PictographIdentifier extends XbotSubsystem {
 
-    private static VuMarkIdentifier instance = null;
-
+    public static final String CLASS_NAME = PictographIdentifier.class.getName();
     private static boolean initialized = false;
 
     private VuforiaLocalizer vuforia;
     private VuforiaTrackables relicTrackables;
     private VuforiaTrackable relicTemplate;
 
-    private VuMarkIdentifier() {
+    private PictographIdentifier() {
     }
 
+    @Override
     public void init(HardwareMap hardwareMap) {
         if (initialized) return;
         int cameraMonitorViewId = hardwareMap
@@ -56,9 +57,14 @@ public class VuMarkIdentifier {
         return vuMark;
     }
 
-    public synchronized static VuMarkIdentifier getInstance() {
+    @Override
+    public String getClassName() {
+        return CLASS_NAME;
+    }
+
+    public static XbotSubsystem getInstance() {
         if (instance == null) {
-            instance = new VuMarkIdentifier();
+            instance = new PictographIdentifier();
         }
         return instance;
     }

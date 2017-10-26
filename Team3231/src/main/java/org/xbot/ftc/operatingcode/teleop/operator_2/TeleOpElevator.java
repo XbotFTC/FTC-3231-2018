@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.xbot.ftc.operatingcode.teleop.XbotOperatorSubHandler;
-import org.xbot.ftc.robotcore.robot_systems.elevator.CubeElevator;
+import org.xbot.ftc.robotcore.subsystems.elevator.CubeElevator;
 
 public class TeleOpElevator extends XbotOperatorSubHandler {
 
@@ -14,7 +14,7 @@ public class TeleOpElevator extends XbotOperatorSubHandler {
 
     @Override
     public void start(HardwareMap hardwareMap, Telemetry telemetry) {
-        cubeElevator = robotSystemsManager.getCubeElevator();
+        cubeElevator = (CubeElevator) robotSystemsManager.getSubsystem(CubeElevator.CLASS_NAME);
     }
 
     @Override

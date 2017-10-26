@@ -1,4 +1,4 @@
-package org.xbot.ftc.robotcore.data_systems.imu;
+package org.xbot.ftc.robotcore.subsystems.imu;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -10,14 +10,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.xbot.ftc.robotcore.XbotRobotConstants;
+import org.xbot.ftc.robotcore.subsystems.XbotSubsystem;
 
 import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
-public class BoschIMU {
+public class BoschIMU extends XbotSubsystem {
 
-    private static BoschIMU instance = null;
+    public static final String CLASS_NAME = BoschIMU.class.getName();
     private static boolean initialized = false;
 
     private boolean imuEnabled = false;
@@ -26,6 +27,7 @@ public class BoschIMU {
     private BoschIMU() {
     }
 
+    @Override
     public void init(HardwareMap hardwareMap) {
         if (initialized) return;
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -88,7 +90,12 @@ public class BoschIMU {
         return String.format(Locale.getDefault(), "%.1f", AngleUnit.DEGREES.normalize(degrees));
     }
 
-    public synchronized static BoschIMU getInstance() {
+    @Override
+    public String getClassName() {
+        return CLASS_NAME;
+    }
+
+    public static XbotSubsystem getInstance() {
         if (instance == null) {
             instance = new BoschIMU();
         }
@@ -146,7 +153,7 @@ class BoschIMUUpdater implements Runnable {
         return gravity;
     }
 
-    public synchronized static BoschIMUUpdater getInstance() {
+    public static BoschIMUUpdater getInstance() {
         if (instance == null) {
             instance = new BoschIMUUpdater();
         }

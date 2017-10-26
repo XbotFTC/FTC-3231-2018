@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.xbot.ftc.operatingcode.teleop.XbotOperatorSubHandler;
-import org.xbot.ftc.robotcore.robot_systems.arm.JewelArm;
+import org.xbot.ftc.robotcore.subsystems.arm.JewelArm;
 
 public class TeleOpJewelSmacker extends XbotOperatorSubHandler {
 
@@ -13,7 +13,7 @@ public class TeleOpJewelSmacker extends XbotOperatorSubHandler {
 
     @Override
     public void start(HardwareMap hardwareMap, Telemetry telemetry) {
-        jewelArm = robotSystemsManager.getJewelArm();
+        jewelArm = (JewelArm) robotSystemsManager.getSubsystem(JewelArm.CLASS_NAME);
     }
 
     @Override
