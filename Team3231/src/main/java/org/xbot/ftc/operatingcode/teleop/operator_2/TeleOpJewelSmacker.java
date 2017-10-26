@@ -13,6 +13,7 @@ public class TeleOpJewelSmacker extends XbotOperatorSubHandler {
 
     @Override
     public void start(HardwareMap hardwareMap, Telemetry telemetry) {
+        super.start(hardwareMap, telemetry);
         jewelArm = (JewelArm) robotSystemsManager.getSubsystem(JewelArm.CLASS_NAME);
     }
 

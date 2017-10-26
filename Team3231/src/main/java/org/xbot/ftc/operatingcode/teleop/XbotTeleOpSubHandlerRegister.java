@@ -13,8 +13,8 @@ public class XbotTeleOpSubHandlerRegister {
 
     public static void registerListeners() {
         listeners.add(new TeleOpMecanumDrive());
-        //listeners.add(new TeleOpJewelSmacker());
-        //listeners.add(new TeleOpElevator());
+        listeners.add(new TeleOpJewelSmacker());
+        listeners.add(new TeleOpElevator());
 
         for (XbotTeleOpListener listener : listeners) {
             XbotTeleOpHandler.registerListener(listener);

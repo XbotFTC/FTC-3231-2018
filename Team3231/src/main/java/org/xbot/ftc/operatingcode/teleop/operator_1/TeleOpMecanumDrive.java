@@ -12,13 +12,12 @@ import org.xbot.ftc.robotcore.subsystems.drive.MecanumDrive;
 public class TeleOpMecanumDrive extends XbotOperatorSubHandler {
 
     private MecanumDrive mecanumDrive;
-    private Telemetry telemetry;
 
     @Override
     public void start(HardwareMap hardwareMap, Telemetry telemetry) {
+        super.start(hardwareMap, telemetry);
         Drive drive = (Drive) robotSystemsManager.getSubsystem(Drive.CLASS_NAME);
         mecanumDrive = drive.getMecanumDrive();
-        this.telemetry = telemetry;
     }
 
     @Override

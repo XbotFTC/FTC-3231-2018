@@ -11,7 +11,6 @@ import org.xbot.ftc.robotcore.subsystems.vision.PictographIdentifier;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public abstract class XbotSubsystemRegister {
 
     private static List<XbotSubsystem> subsystems = new ArrayList<>();

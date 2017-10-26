@@ -14,6 +14,7 @@ public class TeleOpElevator extends XbotOperatorSubHandler {
 
     @Override
     public void start(HardwareMap hardwareMap, Telemetry telemetry) {
+        super.start(hardwareMap, telemetry);
         cubeElevator = (CubeElevator) robotSystemsManager.getSubsystem(CubeElevator.CLASS_NAME);
     }
 
