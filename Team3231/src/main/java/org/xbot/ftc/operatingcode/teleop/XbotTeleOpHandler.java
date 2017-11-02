@@ -23,9 +23,11 @@ public class XbotTeleOpHandler extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry.addData("Listeners:", "Registering");
+        telemetry.update();
         RobotSubsystemManager.getInstance().init(hardwareMap);
         XbotTeleOpSubHandlerRegister.registerListeners();
         telemetry.addData("Listeners:", "Registered");
+        telemetry.update();
 
         waitForStart();
 

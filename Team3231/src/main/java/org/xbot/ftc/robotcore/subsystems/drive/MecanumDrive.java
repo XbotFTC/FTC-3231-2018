@@ -1,5 +1,8 @@
 package org.xbot.ftc.robotcore.subsystems.drive;
 
+/**
+ * CLASS IS NOT USED
+ */
 public class MecanumDrive {
 
     private Drive drive;
@@ -25,7 +28,7 @@ public class MecanumDrive {
         rearLeftPower = r * Math.sin(robotAngle) + rightX;
         rearRightPower = r * Math.cos(robotAngle) - rightX;
 
-        drive.setMotorPowers(frontLeftPower, rearLeftPower, frontRightPower, rearRightPower);
+        //drive.setMotorPowers(frontLeftPower, rearLeftPower, frontRightPower, rearRightPower);
     }
 
     public void stop() {

@@ -1,15 +1,17 @@
 package org.xbot.ftc.robotcore.subsystems.drive;
 
-class TankDrive {
+import com.qualcomm.robotcore.util.Range;
+
+public class TankDrive {
 
     private Drive drive;
 
-    private TankDrive(Drive drive) {
+    protected TankDrive(Drive drive) {
         this.drive = drive;
     }
 
-    public void drive(double leftPower, double rightPower) {
-        drive.setMotorPowers(leftPower, rightPower);
+    public void drive(double leftStickY, double rightStickyY) {
+        drive.setMotorPowers(leftStickY, rightStickyY);
     }
 
     public void stop() {

@@ -26,7 +26,7 @@ public class TeleOpJewelSmacker extends XbotOperatorSubHandler {
 
     @Override
     public void stop() {
-
+        jewelArm.setPosition(0);
     }
 
     @Override

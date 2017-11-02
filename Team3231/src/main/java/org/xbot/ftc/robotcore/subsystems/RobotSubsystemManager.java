@@ -3,11 +3,6 @@ package org.xbot.ftc.robotcore.subsystems;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.xbot.ftc.robotcore.XbotSubsystemRegister;
-import org.xbot.ftc.robotcore.subsystems.imu.BoschIMU;
-import org.xbot.ftc.robotcore.subsystems.vision.PictographIdentifier;
-import org.xbot.ftc.robotcore.subsystems.arm.JewelArm;
-import org.xbot.ftc.robotcore.subsystems.drive.Drive;
-import org.xbot.ftc.robotcore.subsystems.elevator.CubeElevator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
