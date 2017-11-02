@@ -1,40 +1,41 @@
 package org.xbot.ftc.operatingcode.teleop.operator_1;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 
-import org.xbot.ftc.robotcore.XbotOpMode;
-import org.xbot.ftc.robotcore.robot_systems.drive.TankDrive;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.xbot.ftc.operatingcode.teleop.XbotOperatorSubHandler;
+import org.xbot.ftc.robotcore.subsystems.drive.Drive;
+import org.xbot.ftc.robotcore.subsystems.drive.TankDrive;
 
-@TeleOp(name="TeleOpTankDrive", group="OpMode")
-@Disabled
-public class TeleOpTankDrive extends XbotOpMode {
+public class TeleOpTankDrive extends XbotOperatorSubHandler {
 
+    private Drive drive;
     private TankDrive tankDrive;
 
     @Override
-    public void init() {
-        super.init();
-        updateTelemetry("Status", "Initializing");
-        tankDrive = new TankDrive(hardwareMap);
-        updateTelemetry("Status", "Initialized");
+    public void start(HardwareMap hardwareMap, Telemetry telemetry) {
+        super.start(hardwareMap, telemetry);
+        drive = (Drive) robotSystemsManager.getSubsystem(Drive.CLASS_NAME);
+        tankDrive = drive.getTankDrive();
     }
 
     @Override
-    public void loop() {
-        final double leftPower = gamepad1.left_stick_y;
-        final double rightPower = gamepad1.right_stick_y;
-
-        tankDrive.drive(leftPower, rightPower);
-        updateTelemetry("Status", "Run Time: " + runtime.toString());
-        updateTelemetry("Motors", "RightPower (%.2f), LeftPower (%.2f)", leftPower, rightPower);
+    public void handle(Gamepad gamepad1, Gamepad gamepad2) {
+        tankDrive.drive(Range.clip(gamepad1.left_stick_y, -1, 1),
+                        Range.clip(gamepad1.right_stick_y, -1, 1));
     }
 
     @Override
     public void stop() {
-        super.stop();
-        updateTelemetry("Status", "Stopping TankDrive");
         tankDrive.stop();
-        updateTelemetry("Status", "Stopped TankDrive");
+    }
+
+    @Override
+    public void updateTelemetry() {
+        telemetry.addData("LeftPower: ", drive.getLeftFrontDrive().getPower());
+        telemetry.addData("RightPower: ", drive.getRightFrontDrive().getPower());
+        telemetry.update();
     }
 }

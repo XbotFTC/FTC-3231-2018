@@ -2,30 +2,31 @@ package org.xbot.ftc.operatingcode.teleop.operator_2;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.xbot.ftc.operatingcode.teleop.XbotOperatorSubHandler;
-import org.xbot.ftc.robotcore.subsystems.elevator.CubeElevator;
+import org.xbot.ftc.robotcore.subsystems.arm.JewelArm;
 
-public class TeleOpElevator extends XbotOperatorSubHandler {
+public class TeleOpJewelSmacker extends XbotOperatorSubHandler {
 
-    private CubeElevator cubeElevator;
+    private JewelArm jewelArm;
 
     @Override
     public void start(HardwareMap hardwareMap, Telemetry telemetry) {
         super.start(hardwareMap, telemetry);
-        cubeElevator = (CubeElevator) robotSystemsManager.getSubsystem(CubeElevator.CLASS_NAME);
+        jewelArm = (JewelArm) robotSystemsManager.getSubsystem(JewelArm.CLASS_NAME);
     }
 
     @Override
     public void handle(Gamepad gamepad1, Gamepad gamepad2) {
-        cubeElevator.setPower(Range.clip(gamepad2.right_stick_y, -1.0, 1.0));
+        if (gamepad2.dpad_up) {
+            jewelArm.toggleArm();
+        }
     }
 
     @Override
     public void stop() {
-        cubeElevator.stop();
+        jewelArm.setPosition(0);
     }
 
     @Override

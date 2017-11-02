@@ -1,13 +1,15 @@
-package org.xbot.ftc.robotcore.robot_systems.arm;
+package org.xbot.ftc.robotcore.subsystems.arm;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.xbot.ftc.robotcore.XbotRobotConstants;
+import org.xbot.ftc.robotcore.subsystems.XbotSubsystem;
 
-public class JewelArm {
+public class JewelArm extends XbotSubsystem {
 
-    private static JewelArm instance = null;
+    public static final String CLASS_NAME = JewelArm.class.getName();
+    private static boolean initialized = false;
 
     private Servo jewelArmServo;
     private ArmState currentState;
@@ -22,10 +24,13 @@ public class JewelArm {
     private JewelArm() {
     }
 
+    @Override
     public void init(HardwareMap hardwareMap) {
+        if (initialized) return;
         jewelArmServo = hardwareMap.get(Servo.class, XbotRobotConstants.JEWEL_SMACKER_SERVO);
         jewelArmServo.setPosition(0);
         currentState = ArmState.UP;
+        initialized = true;
     }
 
     public void toggleArm() {
@@ -54,7 +59,12 @@ public class JewelArm {
         return jewelArmServo;
     }
 
-    public synchronized static JewelArm getInstance() {
+    @Override
+    public String getClassName() {
+        return CLASS_NAME;
+    }
+
+    public static XbotSubsystem getInstance() {
         if (instance == null) {
             instance = new JewelArm();
         }

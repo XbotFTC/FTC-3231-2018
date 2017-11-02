@@ -1,4 +1,4 @@
-package org.xbot.ftc.robotcore.data_systems.vision;
+package org.xbot.ftc.robotcore.subsystems.vision;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -8,50 +8,38 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import org.xbot.ftc.R;
+import org.xbot.ftc.robotcore.subsystems.XbotSubsystem;
 
-public class VuMarkIdentifier {
+public class PictographIdentifier extends XbotSubsystem {
 
-    private HardwareMap hardwareMap;
+    public static final String CLASS_NAME = PictographIdentifier.class.getName();
+    private static boolean initialized = false;
 
     private VuforiaLocalizer vuforia;
     private VuforiaTrackables relicTrackables;
     private VuforiaTrackable relicTemplate;
 
-    public VuMarkIdentifier(HardwareMap hardwareMap,
-                            String vuforiaLicenseKey,
-                            VuforiaLocalizer.CameraDirection cameraDirection) {
-        this.hardwareMap = hardwareMap;
-        init(vuforiaLicenseKey, cameraDirection);
+    private PictographIdentifier() {
     }
 
-    public VuMarkIdentifier(HardwareMap hardwareMap,
-                            VuforiaLocalizer.CameraDirection cameraDirection) {
-        this(hardwareMap,
-                hardwareMap.appContext.getString(R.string.vuforia_license_key),
-                cameraDirection);
-    }
-
-    public VuMarkIdentifier(HardwareMap hardwareMap) {
-        this(hardwareMap,
-                hardwareMap.appContext.getString(R.string.vuforia_license_key),
-                VuforiaLocalizer.CameraDirection.BACK);
-    }
-
-    private void init(String vuforiaLicenseKey, VuforiaLocalizer.CameraDirection cameraDirection) {
+    @Override
+    public void init(HardwareMap hardwareMap) {
+        if (initialized) return;
         int cameraMonitorViewId = hardwareMap
                 .appContext
                 .getResources()
                 .getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
-        parameters.vuforiaLicenseKey = vuforiaLicenseKey;
-        parameters.cameraDirection = cameraDirection;
+        parameters.vuforiaLicenseKey = hardwareMap.appContext.getString(R.string.vuforia_license_key);
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
         relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
         relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate");
+        initialized = true;
     }
 
     public RelicRecoveryVuMark keepIdentifyingUntilVuMarkIsFound() {
@@ -67,5 +55,17 @@ public class VuMarkIdentifier {
         RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
         relicTrackables.deactivate();
         return vuMark;
+    }
+
+    @Override
+    public String getClassName() {
+        return CLASS_NAME;
+    }
+
+    public static XbotSubsystem getInstance() {
+        if (instance == null) {
+            instance = new PictographIdentifier();
+        }
+        return instance;
     }
 }
