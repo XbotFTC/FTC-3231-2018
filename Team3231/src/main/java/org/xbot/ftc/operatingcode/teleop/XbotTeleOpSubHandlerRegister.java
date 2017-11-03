@@ -1,6 +1,6 @@
 package org.xbot.ftc.operatingcode.teleop;
 
-import org.xbot.ftc.operatingcode.teleop.operator_1.TeleOpTankDrive;
+import org.xbot.ftc.operatingcode.teleop.operator_1.TeleOpDrive;
 import org.xbot.ftc.operatingcode.teleop.operator_2.TeleOpElevator;
 import org.xbot.ftc.operatingcode.teleop.operator_2.TeleOpGlyphGripper;
 
@@ -14,7 +14,7 @@ public class XbotTeleOpSubHandlerRegister {
     public static void registerListeners() {
         //listeners.add(new TeleOpJewelSmacker());
         listeners.add(new TeleOpElevator());
-        listeners.add(new TeleOpTankDrive());
+        listeners.add(new TeleOpDrive());
         listeners.add(new TeleOpGlyphGripper());
 
         for (XbotTeleOpHandler listener : listeners) {

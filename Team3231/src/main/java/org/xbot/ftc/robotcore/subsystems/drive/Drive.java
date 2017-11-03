@@ -15,8 +15,11 @@ public class Drive extends XbotSubsystem {
     private DcMotor leftFrontDrive = null;
     private DcMotor rightFrontDrive = null;
 
+    private double motorPowerMultiplier = 1.0;
+
     private MecanumDrive mecanumDrive;
     private TankDrive tankDrive;
+    private ArcadeDrive arcadeDrive;
 
     private Drive() {
     }
@@ -30,18 +33,29 @@ public class Drive extends XbotSubsystem {
         rightFrontDrive.setDirection(Direction.FORWARD);
 
         tankDrive = new TankDrive(this);
+        arcadeDrive = new ArcadeDrive(this);
 
         initialized = true;
     }
 
-    public void setMotorPowers(double power) {
-        leftFrontDrive.setPower(power);
-        rightFrontDrive.setPower(power);
+    public void setMotorPowerMultiplier(double motorPowerMultiplier) {
+        this.motorPowerMultiplier = motorPowerMultiplier;
     }
 
+
     public void setMotorPowers(double leftFrontDrivePower, double rightFrontDrivePower) {
+        leftFrontDrivePower *= motorPowerMultiplier;
+        rightFrontDrivePower *= motorPowerMultiplier;
         leftFrontDrive.setPower(leftFrontDrivePower);
         rightFrontDrive.setPower(rightFrontDrivePower);
+    }
+
+    public void setMotorPowers(double power) {
+        setMotorPowers(power, power);
+    }
+
+    public void stop() {
+        setMotorPowers(0);
     }
 
     public DcMotor getLeftFrontDrive() {
@@ -58,6 +72,10 @@ public class Drive extends XbotSubsystem {
 
     public TankDrive getTankDrive() {
         return tankDrive;
+    }
+
+    public ArcadeDrive getArcadeDrive() {
+        return arcadeDrive;
     }
 
     @Override
