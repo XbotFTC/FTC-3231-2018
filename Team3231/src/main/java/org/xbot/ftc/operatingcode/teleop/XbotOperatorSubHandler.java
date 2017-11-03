@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.xbot.ftc.robotcore.subsystems.RobotSubsystemManager;
 
-public abstract class XbotOperatorSubHandler implements XbotTeleOpListener {
+public abstract class XbotOperatorSubHandler implements XbotTeleOpHandler {
 
     protected RobotSubsystemManager robotSystemsManager = RobotSubsystemManager.getInstance();
     protected Telemetry telemetry;

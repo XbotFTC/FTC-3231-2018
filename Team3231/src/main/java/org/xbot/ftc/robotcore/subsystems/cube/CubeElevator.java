@@ -1,4 +1,4 @@
-package org.xbot.ftc.robotcore.subsystems.elevator;
+package org.xbot.ftc.robotcore.subsystems.cube;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
