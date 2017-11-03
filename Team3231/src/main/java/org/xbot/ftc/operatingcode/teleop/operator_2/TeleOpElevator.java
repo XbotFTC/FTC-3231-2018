@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.xbot.ftc.operatingcode.teleop.XbotOperatorSubHandler;
-import org.xbot.ftc.robotcore.subsystems.elevator.CubeElevator;
+import org.xbot.ftc.robotcore.subsystems.cube.CubeElevator;
 
 public class TeleOpElevator extends XbotOperatorSubHandler {
 
