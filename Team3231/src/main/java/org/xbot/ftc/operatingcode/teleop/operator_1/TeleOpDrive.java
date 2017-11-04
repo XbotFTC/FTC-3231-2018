@@ -9,7 +9,7 @@ import org.xbot.ftc.operatingcode.teleop.XbotOperatorSubHandler;
 import org.xbot.ftc.robotcore.subsystems.drive.Drive;
 import org.xbot.ftc.robotcore.subsystems.drive.TankDrive;
 
-public class TeleOpTankDrive extends XbotOperatorSubHandler {
+public class TeleOpDrive extends XbotOperatorSubHandler {
 
     private Drive drive;
     private TankDrive tankDrive;
@@ -23,13 +23,15 @@ public class TeleOpTankDrive extends XbotOperatorSubHandler {
 
     @Override
     public void handle(Gamepad gamepad1, Gamepad gamepad2) {
-        tankDrive.drive(Range.clip(gamepad1.left_stick_y, -1, 1),
-                        Range.clip(gamepad1.right_stick_y, -1, 1));
+        if (gamepad1.dpad_up) drive.setMotorPowerMultiplier(1.0);
+        else if (gamepad1.dpad_left || gamepad1.dpad_right) drive.setMotorPowerMultiplier(0.5);
+        else if (gamepad1.dpad_down) drive.setMotorPowerMultiplier(0.25);
+        tankDrive.drive(gamepad1);
     }
 
     @Override
     public void stop() {
-        tankDrive.stop();
+        drive.stop();
     }
 
     @Override
