@@ -8,7 +8,6 @@ import org.xbot.ftc.robotcore.subsystems.RobotSubsystemManager;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @TeleOp(name="Main: TeleOp", group="Main")
 public class XbotTeleOp extends LinearOpMode {
 
