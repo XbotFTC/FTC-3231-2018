@@ -12,7 +12,6 @@ public class XbotTeleOpSubHandlerRegister {
     private static List<XbotTeleOpHandler> listeners = new ArrayList<>();
 
     public static void registerListeners() {
-        //listeners.add(new TeleOpJewelSmacker());
         listeners.add(new TeleOpElevator());
         listeners.add(new TeleOpDrive());
         listeners.add(new TeleOpGlyphGripper());
