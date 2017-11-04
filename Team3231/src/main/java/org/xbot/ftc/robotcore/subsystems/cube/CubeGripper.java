@@ -24,8 +24,11 @@ public class CubeGripper extends XbotSubsystem {
         leftServo = hardwareMap.get(Servo.class, XbotRobotConstants.GRIPPER_SERVO_LEFT);
         rightServo = hardwareMap.get(Servo.class, XbotRobotConstants.GRIPPER_SERVO_RIGHT);
 
+        leftServo.setDirection(Servo.Direction.FORWARD);
+        rightServo.setDirection(Servo.Direction.REVERSE);
+
         leftServo.setPosition(0);
-        rightServo.setPosition(1);
+        rightServo.setPosition(0);
 
         initialized = true;
     }
