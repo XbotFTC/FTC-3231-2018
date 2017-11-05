@@ -26,10 +26,16 @@ public class CubeElevator extends XbotSubsystem {
         initialized = true;
     }
 
+    /**
+     * PLEASE USE THIS METHOD WITH CAUTION TO PREVENT STRIPPING THE GEAR
+     */
     public void lift() {
         setPower(1);
     }
 
+    /**
+     * PLEASE USE THIS METHOD WITH CAUTION TO PREVENT STRIPPING THE GEAR
+     */
     public void down() {
         setPower(-1);
     }
