@@ -33,5 +33,9 @@ public class AutoProgram extends LinearOpMode {
         drive.encoderDrive(0.6, 10, 10, 5);
         drive.encoderDrive(1, 5, -5, 2);
         drive.encoderDrive(0.4, 8, 8, 4);
+        cubeElevator.down();
+        Thread.sleep(200);
+        cubeElevator.stop();
+        cubeGripper.letItGo();
     }
 }
