@@ -1,6 +1,5 @@
 package org.xbot.ftc.operatingcode.teleop.operator_2;
 
-
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
