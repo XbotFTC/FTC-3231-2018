@@ -12,7 +12,7 @@ public abstract class XbotOperatorSubHandler implements XbotTeleOpHandler {
 
     @Override
     public void start(HardwareMap hardwareMap, Telemetry telemetry) {
-        robotSystemsManager.init(hardwareMap);
+        robotSystemsManager.init(hardwareMap, telemetry);
         this.telemetry = telemetry;
     }
 }

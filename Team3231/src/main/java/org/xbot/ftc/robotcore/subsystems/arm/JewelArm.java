@@ -3,6 +3,7 @@ package org.xbot.ftc.robotcore.subsystems.arm;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.xbot.ftc.robotcore.XbotRobotConstants;
 import org.xbot.ftc.robotcore.subsystems.XbotSubsystem;
 
@@ -25,7 +26,7 @@ public class JewelArm extends XbotSubsystem {
     }
 
     @Override
-    public void init(HardwareMap hardwareMap) {
+    public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         if (initialized) return;
         jewelArmServo = hardwareMap.get(Servo.class, XbotRobotConstants.JEWEL_SMACKER_SERVO);
         jewelArmServo.setPosition(0);

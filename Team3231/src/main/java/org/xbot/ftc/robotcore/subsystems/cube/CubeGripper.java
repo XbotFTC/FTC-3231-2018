@@ -3,6 +3,7 @@ package org.xbot.ftc.robotcore.subsystems.cube;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.xbot.ftc.robotcore.XbotRobotConstants;
 import org.xbot.ftc.robotcore.subsystems.XbotSubsystem;
 
@@ -19,7 +20,7 @@ public class CubeGripper extends XbotSubsystem {
     }
 
     @Override
-    public void init(HardwareMap hardwareMap) {
+    public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         if (initialized) return;
         leftServo = hardwareMap.get(Servo.class, XbotRobotConstants.GRIPPER_SERVO_LEFT);
         rightServo = hardwareMap.get(Servo.class, XbotRobotConstants.GRIPPER_SERVO_RIGHT);
@@ -27,10 +28,17 @@ public class CubeGripper extends XbotSubsystem {
         leftServo.setDirection(Servo.Direction.FORWARD);
         rightServo.setDirection(Servo.Direction.REVERSE);
 
-        leftServo.setPosition(0);
-        rightServo.setPosition(0);
+        setServoPositions(0, 0);
 
         initialized = true;
+    }
+
+    public void grip() {
+        setServoPositions(1, 1);
+    }
+
+    public void letItGo() {
+        setServoPositions(0, 0);
     }
 
     public void setServoPositions(double leftServoPos, double rightServoPos) {

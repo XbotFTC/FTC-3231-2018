@@ -3,6 +3,7 @@ package org.xbot.ftc.robotcore.subsystems.cube;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.xbot.ftc.robotcore.XbotRobotConstants;
 import org.xbot.ftc.robotcore.subsystems.XbotSubsystem;
 
@@ -18,11 +19,19 @@ public class CubeElevator extends XbotSubsystem {
     }
 
     @Override
-    public void init(HardwareMap hardwareMap) {
+    public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         if (initialized) return;
         elevatorMotor = hardwareMap.get(DcMotor.class, XbotRobotConstants.ELEVATOR_MOTOR);
 
         initialized = true;
+    }
+
+    public void lift() {
+        setPower(1);
+    }
+
+    public void down() {
+        setPower(-1);
     }
 
     public void setPower(double power) {

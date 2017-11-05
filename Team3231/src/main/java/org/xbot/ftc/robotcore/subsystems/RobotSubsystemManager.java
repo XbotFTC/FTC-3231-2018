@@ -2,6 +2,8 @@ package org.xbot.ftc.robotcore.subsystems;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.xbot.ftc.robotcore.Utils.GameClock;
 import org.xbot.ftc.robotcore.XbotSubsystemRegister;
 
 import java.util.ArrayList;
@@ -17,6 +19,8 @@ public class RobotSubsystemManager {
     private static List<XbotSubsystem> registeredSubsystems = new ArrayList<>();
     private static Map<String, XbotSubsystem> registeredSubsystemsMap = new HashMap<>();
 
+    public GameClock gameClock;
+
     private RobotSubsystemManager() {
     }
 
@@ -24,19 +28,19 @@ public class RobotSubsystemManager {
         registeredSubsystems.add(subsystem);
     }
 
-    public void init(HardwareMap hardwareMap) {
+    public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         if (initialized) return;
         XbotSubsystemRegister.registerListeners();
-
+        gameClock = GameClock.getInstance();
         for (XbotSubsystem subsystem : registeredSubsystems) {
-            subsystem.init(hardwareMap);
+            subsystem.init(hardwareMap, telemetry);
             registeredSubsystemsMap.put(subsystem.getClassName(), subsystem);
         }
 
         initialized = true;
     }
 
-    public  XbotSubsystem getSubsystem(String className) {
+    public XbotSubsystem getSubsystem(String className) {
         return registeredSubsystemsMap.get(className);
     }
 

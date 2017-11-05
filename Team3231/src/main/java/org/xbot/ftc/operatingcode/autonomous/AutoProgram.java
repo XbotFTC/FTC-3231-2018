@@ -14,7 +14,7 @@ public class AutoProgram extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         RobotSubsystemManager robotSubsystemManager = RobotSubsystemManager.getInstance();
-        robotSubsystemManager.init(hardwareMap);
+        robotSubsystemManager.init(hardwareMap, telemetry);
 
         Drive drive = (Drive) robotSubsystemManager.getSubsystem(Drive.CLASS_NAME);
         CubeElevator cubeElevator =
@@ -23,18 +23,15 @@ public class AutoProgram extends LinearOpMode {
                 (CubeGripper) robotSubsystemManager.getSubsystem(CubeGripper.CLASS_NAME);
 
         waitForStart();
+        robotSubsystemManager.gameClock.resetClock();
 
-        cubeGripper.setServoPositions(1, 1);
+        cubeGripper.grip();
         Thread.sleep(300);
-        cubeElevator.setPower(-1);
-        Thread.sleep(200);
-        drive.setMotorPowers(-1);
-        Thread.sleep(700);
-        drive.setMotorPowers(-1, 1);
-        Thread.sleep(500);
-        drive.setMotorPowers(-1);
-        Thread.sleep(100);
-        cubeGripper.setServoPositions(0, 0);
-        Thread.sleep(100);
+        cubeElevator.lift();
+        Thread.sleep(400);
+        cubeElevator.stop();
+        drive.encoderDrive(0.6, 10, 10, 5);
+        drive.encoderDrive(1, 5, -5, 2);
+        drive.encoderDrive(0.4, 8, 8, 4);
     }
 }
