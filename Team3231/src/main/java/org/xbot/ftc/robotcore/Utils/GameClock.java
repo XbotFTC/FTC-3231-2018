@@ -15,7 +15,9 @@ public class GameClock {
     }
 
     public double getTimeElapsed() {
-        secondsElapsed += (System.currentTimeMillis() - previousSystemTime) / 1000.0;
+        double currentTime = System.currentTimeMillis();
+        secondsElapsed += (currentTime - previousSystemTime) / 1000.0;
+        previousSystemTime = currentTime;
         return secondsElapsed;
     }
 
