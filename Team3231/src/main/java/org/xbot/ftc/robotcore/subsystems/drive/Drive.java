@@ -1,11 +1,13 @@
 package org.xbot.ftc.robotcore.subsystems.drive;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.xbot.ftc.robotcore.Utils.GameClock;
+import org.xbot.ftc.robotcore.utils.GameClock;
 import org.xbot.ftc.robotcore.XbotRobotConstants;
 import org.xbot.ftc.robotcore.subsystems.XbotSubsystem;
 
@@ -85,7 +87,7 @@ public class Drive extends XbotSubsystem {
         setMotorPowers(power);
 
         double startTime = GameClock.getInstance().getTimeElapsed();
-        while (GameClock.getInstance().getTimeElapsed() - startTime < timeout &&
+        while (opMode.opModeIsActive() && GameClock.getInstance().getTimeElapsed() - startTime < timeout &&
                 leftDriveMotor.isBusy() && rightDriveMotor.isBusy()) {
             telemetry.addData("Left Target: ", leftTarget)
                     .addData("Left Motor Current Position", leftDriveMotor.getCurrentPosition());

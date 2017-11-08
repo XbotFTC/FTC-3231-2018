@@ -12,8 +12,7 @@ public class TeleOpGlyphGripper extends XbotOperatorSubHandler {
     private CubeGripper cubeGripper;
 
     @Override
-    public void start(HardwareMap hardwareMap, Telemetry telemetry) {
-        super.start(hardwareMap, telemetry);
+    public void start() {
         cubeGripper = (CubeGripper) robotSystemsManager.getSubsystem(CubeGripper.CLASS_NAME);
     }
 
@@ -38,7 +37,7 @@ public class TeleOpGlyphGripper extends XbotOperatorSubHandler {
     }
 
     @Override
-    public void updateTelemetry() {
+    public void updateTelemetry(Telemetry telemetry) {
 
     }
 }

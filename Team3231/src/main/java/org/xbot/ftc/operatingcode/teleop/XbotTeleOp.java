@@ -3,6 +3,7 @@ package org.xbot.ftc.operatingcode.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.xbot.ftc.operatingcode.BaseRobot;
 import org.xbot.ftc.robotcore.subsystems.RobotSubsystemManager;
 
 import java.util.ArrayList;
@@ -11,36 +12,37 @@ import java.util.List;
 @TeleOp(name="Main: TeleOp", group="Main")
 public class XbotTeleOp extends LinearOpMode {
 
-    private static List<XbotTeleOpHandler> listeners = new ArrayList<>();
+    private static List<XbotOperatorSubHandler> handlers = new ArrayList<>();
 
-    public static void registerListener(XbotTeleOpHandler listener) {
-        listeners.add(listener);
+    public static void registerHandler(XbotOperatorSubHandler listener) {
+        handlers.add(listener);
     }
 
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry.addData("Listeners:", "Registering");
         telemetry.update();
-        RobotSubsystemManager.getInstance().init(hardwareMap, telemetry);
+        BaseRobot.initOpMode(this, hardwareMap, telemetry);
         XbotTeleOpSubHandlerRegister.registerListeners();
         telemetry.addData("Listeners:", "Registered");
         telemetry.update();
 
         waitForStart();
+
         RobotSubsystemManager.getInstance().gameClock.resetClock();
 
-        for (XbotTeleOpHandler listener : listeners) {
-            listener.start(hardwareMap, telemetry);
+        for (XbotOperatorSubHandler listener : handlers) {
+            listener.start();
         }
 
         while (opModeIsActive()) {
-            for (XbotTeleOpHandler listener : listeners) {
+            for (XbotOperatorSubHandler listener : handlers) {
                 listener.handle(gamepad1, gamepad2);
-                listener.updateTelemetry();
+                listener.updateTelemetry(telemetry);
             }
         }
 
-        for (XbotTeleOpHandler listener : listeners) {
+        for (XbotOperatorSubHandler listener : handlers) {
             listener.stop();
         }
     }

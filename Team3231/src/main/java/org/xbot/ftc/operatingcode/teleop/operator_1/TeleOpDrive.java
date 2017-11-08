@@ -18,8 +18,7 @@ public class TeleOpDrive extends XbotOperatorSubHandler {
     private Drive.DriveMode driveMode = Drive.DriveMode.TANK;
 
     @Override
-    public void start(HardwareMap hardwareMap, Telemetry telemetry) {
-        super.start(hardwareMap, telemetry);
+    public void start() {
         drive = (Drive) robotSystemsManager.getSubsystem(Drive.CLASS_NAME);
         tankDrive = drive.getTankDrive();
         arcadeDrive = drive.getArcadeDrive();
@@ -58,7 +57,7 @@ public class TeleOpDrive extends XbotOperatorSubHandler {
     }
 
     @Override
-    public void updateTelemetry() {
+    public void updateTelemetry(Telemetry telemetry) {
         telemetry.addData("LeftPower: ", drive.getLeftDriveMotor().getPower());
         telemetry.addData("RightPower: ", drive.getRightDriveMotor().getPower());
         telemetry.update();

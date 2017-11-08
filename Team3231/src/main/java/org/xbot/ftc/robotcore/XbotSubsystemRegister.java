@@ -14,9 +14,8 @@ import java.util.List;
 
 public abstract class XbotSubsystemRegister {
 
-    private static List<XbotSubsystem> subsystems = new ArrayList<>();
-
     public static void registerListeners() {
+        List<XbotSubsystem> subsystems = new ArrayList<>();
         //subsystems.add(JewelArm.getInstance());
         subsystems.add(Drive.getInstance());
         subsystems.add(CubeElevator.getInstance());
@@ -24,8 +23,9 @@ public abstract class XbotSubsystemRegister {
         //subsystems.add(BoschIMU.getInstance());
         subsystems.add(PictographIdentifier.getInstance());
 
+        RobotSubsystemManager robotSubsystemManager = RobotSubsystemManager.getInstance();
         for (XbotSubsystem subsystem : subsystems) {
-            RobotSubsystemManager.registerSubsystem(subsystem);
+            robotSubsystemManager.registerSubsystem(subsystem);
         }
     }
 }

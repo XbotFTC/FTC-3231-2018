@@ -1,4 +1,4 @@
-package org.xbot.ftc.robotcore.Utils;
+package org.xbot.ftc.robotcore.utils;
 
 public class GameClock {
 
