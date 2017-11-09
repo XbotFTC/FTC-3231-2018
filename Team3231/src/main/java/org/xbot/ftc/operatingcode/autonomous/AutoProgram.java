@@ -23,7 +23,7 @@ public class AutoProgram extends LinearOpMode {
                 (CubeGripper) robotSubsystemManager.getSubsystem(CubeGripper.CLASS_NAME);
 
         waitForStart();
-        robotSubsystemManager.gameClock.resetClock();
+        robotSubsystemManager.getGameClock().resetClock();
 
         cubeGripper.grip();
         Thread.sleep(300);

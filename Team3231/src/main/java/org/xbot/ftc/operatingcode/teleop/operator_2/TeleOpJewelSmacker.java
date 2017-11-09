@@ -18,9 +18,8 @@ public class TeleOpJewelSmacker extends XbotOperatorSubHandler {
 
     @Override
     public void handle(Gamepad gamepad1, Gamepad gamepad2) {
-        if (gamepad2.dpad_up) {
+        if (gamepad2.dpad_up)
             jewelArm.toggleArm();
-        }
     }
 
     @Override

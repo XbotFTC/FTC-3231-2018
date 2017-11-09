@@ -12,9 +12,9 @@ import java.util.List;
 @TeleOp(name="Main: TeleOp", group="Main")
 public class XbotTeleOp extends LinearOpMode {
 
-    private static List<XbotOperatorSubHandler> handlers = new ArrayList<>();
+    private List<XbotOperatorSubHandler> handlers = new ArrayList<>();
 
-    public static void registerHandler(XbotOperatorSubHandler listener) {
+    public void registerHandler(XbotOperatorSubHandler listener) {
         handlers.add(listener);
     }
 
@@ -23,13 +23,13 @@ public class XbotTeleOp extends LinearOpMode {
         telemetry.addData("Listeners:", "Registering");
         telemetry.update();
         BaseRobot.initOpMode(this, hardwareMap, telemetry);
-        XbotTeleOpSubHandlerRegister.registerListeners();
+        new XbotTeleOpSubHandlerRegister().registerListeners(this);
         telemetry.addData("Listeners:", "Registered");
         telemetry.update();
 
         waitForStart();
 
-        RobotSubsystemManager.getInstance().gameClock.resetClock();
+        RobotSubsystemManager.getInstance().getGameClock().resetClock();
 
         for (XbotOperatorSubHandler listener : handlers) {
             listener.start();

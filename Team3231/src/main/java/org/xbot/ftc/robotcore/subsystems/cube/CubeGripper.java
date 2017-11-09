@@ -46,6 +46,10 @@ public class CubeGripper extends XbotSubsystem {
         rightServo.setPosition(rightServoPos);
     }
 
+    public void setServoPositions(double power) {
+        setServoPositions(power, power);
+    }
+
     public void setLeftServoPosition(double position) {
         leftServo.setPosition(position);
     }

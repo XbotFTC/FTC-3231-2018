@@ -35,11 +35,10 @@ public class JewelArm extends XbotSubsystem {
     }
 
     public void toggleArm() {
-        if (currentState == ArmState.UP) {
+        if (currentState == ArmState.UP)
             setPosition(ArmState.DOWN.ARM_POSITION);
-        } else {
+        else
             setPosition(ArmState.UP.ARM_POSITION);
-        }
     }
 
     public void setPosition(double position) {

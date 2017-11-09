@@ -19,7 +19,7 @@ public class RobotSubsystemManager {
 
     private Map<String, XbotSubsystem> registeredSubsystemsMap = new HashMap<>();
 
-    public GameClock gameClock;
+    private GameClock gameClock;
 
     private RobotSubsystemManager() {
     }
@@ -30,13 +30,12 @@ public class RobotSubsystemManager {
 
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         if (initialized) return;
-        XbotSubsystemRegister.registerListeners();
+        new XbotSubsystemRegister().registerListeners(this);
         gameClock = GameClock.getInstance();
         for (XbotSubsystem subsystem : registeredSubsystemsMap.values()) {
             subsystem.init(hardwareMap, telemetry);
         }
         gameClock.resetClock();
-
 
         initialized = true;
     }
@@ -49,6 +48,10 @@ public class RobotSubsystemManager {
 
     public XbotSubsystem getSubsystem(String className) {
         return registeredSubsystemsMap.get(className);
+    }
+
+    public GameClock getGameClock() {
+        return gameClock;
     }
 
     public static RobotSubsystemManager getInstance() {
