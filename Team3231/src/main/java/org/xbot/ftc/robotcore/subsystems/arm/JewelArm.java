@@ -9,17 +9,15 @@ import org.xbot.ftc.robotcore.subsystems.XbotSubsystem;
 
 public class JewelArm extends XbotSubsystem {
 
-    public static final String CLASS_NAME = JewelArm.class.getName();
     private static boolean initialized = false;
 
     private Servo jewelArmServo;
-    private ArmState currentState;
 
-    public enum ArmState {
-        UP(0.0), DOWN(1.0), UNKNOWN(3231.488);
+    public enum ArmPosition {
+        UP(0.0), DOWN(1.0);
 
         private final double ARM_POSITION;
-        ArmState(final double ARM_POSITION) { this.ARM_POSITION = ARM_POSITION; }
+        ArmPosition(final double ARM_POSITION) { this.ARM_POSITION = ARM_POSITION; }
     }
 
     private JewelArm() {
@@ -29,30 +27,16 @@ public class JewelArm extends XbotSubsystem {
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         if (initialized) return;
         jewelArmServo = hardwareMap.get(Servo.class, XbotRobotConstants.JEWEL_SMACKER_SERVO);
-        jewelArmServo.setPosition(0);
-        currentState = ArmState.UP;
+        setPosition(ArmPosition.UP);
         initialized = true;
-    }
-
-    public void toggleArm() {
-        if (currentState == ArmState.UP)
-            setPosition(ArmState.DOWN.ARM_POSITION);
-        else
-            setPosition(ArmState.UP.ARM_POSITION);
     }
 
     public void setPosition(double position) {
         jewelArmServo.setPosition(position);
+    }
 
-        double currentArmPosition = jewelArmServo.getPosition();
-
-        if (currentArmPosition == ArmState.UP.ARM_POSITION) {
-            currentState = ArmState.UP;
-        } else if (currentArmPosition == ArmState.DOWN.ARM_POSITION) {
-            currentState = ArmState.DOWN;
-        } else {
-            currentState = ArmState.UNKNOWN;
-        }
+    public void setPosition(ArmPosition position) {
+        setPosition(position.ARM_POSITION);
     }
 
     public Servo getJewelArmServo() {
@@ -61,13 +45,12 @@ public class JewelArm extends XbotSubsystem {
 
     @Override
     public String getClassName() {
-        return CLASS_NAME;
+        return JewelArm.class.getName();
     }
 
     public static XbotSubsystem getInstance() {
-        if (instance == null) {
+        if (instance == null)
             instance = new JewelArm();
-        }
         return instance;
     }
 }

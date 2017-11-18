@@ -7,9 +7,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.xbot.ftc.robotcore.utils.GameClock;
 import org.xbot.ftc.robotcore.XbotSubsystemRegister;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class RobotSubsystemManager {
@@ -17,20 +15,20 @@ public class RobotSubsystemManager {
     private static RobotSubsystemManager instance = null;
     private boolean initialized = false;
 
-    private Map<String, XbotSubsystem> registeredSubsystemsMap = new HashMap<>();
+    private static Map<String, XbotSubsystem> registeredSubsystemsMap = new HashMap<>();
 
     private GameClock gameClock;
 
     private RobotSubsystemManager() {
     }
 
-    public void registerSubsystem(XbotSubsystem subsystem) {
+    public static void registerSubsystem(XbotSubsystem subsystem) {
         registeredSubsystemsMap.put(subsystem.getClassName(), subsystem);
     }
 
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         if (initialized) return;
-        new XbotSubsystemRegister().registerListeners(this);
+        XbotSubsystemRegister.registerListeners();
         gameClock = GameClock.getInstance();
         for (XbotSubsystem subsystem : registeredSubsystemsMap.values()) {
             subsystem.init(hardwareMap, telemetry);

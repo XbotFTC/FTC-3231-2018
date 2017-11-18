@@ -19,7 +19,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 public class BoschIMU extends XbotSubsystem {
 
-    public static final String CLASS_NAME = BoschIMU.class.getName();
     private static boolean initialized = false;
 
     private boolean imuEnabled = false;
@@ -93,13 +92,12 @@ public class BoschIMU extends XbotSubsystem {
 
     @Override
     public String getClassName() {
-        return CLASS_NAME;
+        return BoschIMU.class.getName();
     }
 
     public static XbotSubsystem getInstance() {
-        if (instance == null) {
+        if (instance == null)
             instance = new BoschIMU();
-        }
         return instance;
     }
 }
@@ -155,9 +153,8 @@ class BoschIMUUpdater implements Runnable {
     }
 
     public static BoschIMUUpdater getInstance() {
-        if (instance == null) {
+        if (instance == null)
             instance = new BoschIMUUpdater();
-        }
         return instance;
     }
 }

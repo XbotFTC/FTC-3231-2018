@@ -9,8 +9,6 @@ import org.xbot.ftc.robotcore.subsystems.XbotSubsystem;
 
 public class CubeGripper extends XbotSubsystem {
 
-    public static final String CLASS_NAME = CubeGripper.class.getName();
-    private static CubeGripper instance = null;
     private static boolean initialized = false;
 
     private Servo leftServo;
@@ -26,7 +24,7 @@ public class CubeGripper extends XbotSubsystem {
         rightServo = hardwareMap.get(Servo.class, XbotRobotConstants.GRIPPER_SERVO_RIGHT);
 
         leftServo.setDirection(Servo.Direction.FORWARD);
-        rightServo.setDirection(Servo.Direction.REVERSE);
+        rightServo.setDirection(Servo.Direction.FORWARD);
 
         setServoPositions(0, 0);
 
@@ -68,13 +66,12 @@ public class CubeGripper extends XbotSubsystem {
 
     @Override
     public String getClassName() {
-        return CLASS_NAME;
+        return CubeGripper.class.getName();
     }
 
     public static XbotSubsystem getInstance() {
-        if (instance == null) {
+        if (instance == null)
             instance = new CubeGripper();
-        }
         return instance;
     }
 }

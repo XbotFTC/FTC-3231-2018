@@ -9,8 +9,8 @@ import org.xbot.ftc.robotcore.subsystems.cube.CubeElevator;
 import org.xbot.ftc.robotcore.subsystems.cube.CubeGripper;
 import org.xbot.ftc.robotcore.subsystems.drive.Drive;
 
-@Autonomous(name="Main: Auto", group="Main")
-public class AutoProgram extends LinearOpMode {
+@Autonomous(name="Main: TEST", group="Main")
+public class Test extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -24,18 +24,6 @@ public class AutoProgram extends LinearOpMode {
 
         waitForStart();
         robotSubsystemManager.getGameClock().resetClock();
-
-        cubeGripper.grip();
-        Thread.sleep(300);
-        cubeElevator.lift();
-        Thread.sleep(400);
-        cubeElevator.stop();
-        drive.encoderDrive(0.6, 10, 10, 5);
-        drive.encoderDrive(1, 5, -5, 2);
-        drive.encoderDrive(0.4, 8, 8, 4);
-        cubeElevator.down();
-        Thread.sleep(200);
-        cubeElevator.stop();
-        cubeGripper.letItGo();
+        drive.encoderDrive(1, 20, 20, 10);
     }
 }

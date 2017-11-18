@@ -18,7 +18,7 @@ public class TeleOpDrive extends XbotOperatorSubHandler {
 
     @Override
     public void start() {
-        drive = (Drive) robotSystemsManager.getSubsystem(Drive.CLASS_NAME);
+        drive = (Drive) robotSystemsManager.getSubsystem(Drive.class.getName());
         tankDrive = drive.getTankDrive();
         arcadeDrive = drive.getArcadeDrive();
     }

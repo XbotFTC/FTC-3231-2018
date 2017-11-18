@@ -17,11 +17,11 @@ public abstract class XbotSubsystem {
         this.telemetry = telemetry;
     }
 
-    public void setActiveOpMode(LinearOpMode opMode) {
-        this.opMode = opMode;
+    public String getClassName() {
+        throw new UnsupportedOperationException("Class Name Not Set");
     }
 
-    public String getClassName() {
-        throw new UnsupportedOperationException("Class Name Method Not Set");
+    public void setActiveOpMode(LinearOpMode opMode) {
+        this.opMode = opMode;
     }
 }

@@ -31,19 +31,19 @@ public class XbotTeleOp extends LinearOpMode {
 
         RobotSubsystemManager.getInstance().getGameClock().resetClock();
 
-        for (XbotOperatorSubHandler listener : handlers) {
-            listener.start();
+        for (XbotOperatorSubHandler handler : handlers) {
+            handler.start();
         }
 
         while (opModeIsActive()) {
-            for (XbotOperatorSubHandler listener : handlers) {
-                listener.handle(gamepad1, gamepad2);
-                listener.updateTelemetry(telemetry);
+            for (XbotOperatorSubHandler handler : handlers) {
+                handler.handle(gamepad1, gamepad2);
+                handler.updateTelemetry(telemetry);
             }
         }
 
-        for (XbotOperatorSubHandler listener : handlers) {
-            listener.stop();
+        for (XbotOperatorSubHandler handler : handlers) {
+            handler.stop();
         }
     }
 }

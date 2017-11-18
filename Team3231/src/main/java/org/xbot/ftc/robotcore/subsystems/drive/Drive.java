@@ -1,10 +1,9 @@
 package org.xbot.ftc.robotcore.subsystems.drive;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.xbot.ftc.robotcore.utils.GameClock;
@@ -13,7 +12,6 @@ import org.xbot.ftc.robotcore.subsystems.XbotSubsystem;
 
 public class Drive extends XbotSubsystem {
 
-    public static final String CLASS_NAME = Drive.class.getName();
     private static boolean initialized = false;
 
     private DcMotor leftDriveMotor = null;
@@ -25,7 +23,7 @@ public class Drive extends XbotSubsystem {
     private static final double DRIVE_GEAR_REDUCTION = 1.0;
     private static final double WHEEL_DIAMETER_INCHES = 4.0 ;
     private static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-                                                    (WHEEL_DIAMETER_INCHES * 3.1415);
+                                                    (WHEEL_DIAMETER_INCHES * Math.PI);
 
     private TankDrive tankDrive;
     private ArcadeDrive arcadeDrive;
@@ -53,7 +51,7 @@ public class Drive extends XbotSubsystem {
     }
 
     public void setMotorPowerMultiplier(double motorPowerMultiplier) {
-        this.motorPowerMultiplier = motorPowerMultiplier;
+        this.motorPowerMultiplier = Range.clip(motorPowerMultiplier, 0.0, 1.0);
     }
 
     public void setMotorPowers(double leftFrontDrivePower, double rightFrontDrivePower) {
@@ -120,13 +118,12 @@ public class Drive extends XbotSubsystem {
 
     @Override
     public String getClassName() {
-        return CLASS_NAME;
+        return Drive.class.getName();
     }
 
     public static XbotSubsystem getInstance() {
-        if (instance == null) {
+        if (instance == null)
             instance = new Drive();
-        }
         return instance;
     }
 }

@@ -13,10 +13,8 @@ import org.xbot.ftc.robotcore.subsystems.XbotSubsystem;
 
 public class PictographIdentifier extends XbotSubsystem {
 
-    public static final String CLASS_NAME = PictographIdentifier.class.getName();
     private static boolean initialized = false;
 
-    private VuforiaLocalizer vuforia;
     private VuforiaTrackables relicTrackables;
     private VuforiaTrackable relicTemplate;
 
@@ -34,10 +32,9 @@ public class PictographIdentifier extends XbotSubsystem {
 
         parameters.vuforiaLicenseKey = hardwareMap.appContext.getString(R.string.vuforia_license_key);
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+        VuforiaLocalizer vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
-        this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
-
-        relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
+        relicTrackables = vuforia.loadTrackablesFromAsset("RelicVuMark");
         relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate");
         initialized = true;
@@ -45,9 +42,8 @@ public class PictographIdentifier extends XbotSubsystem {
 
     public RelicRecoveryVuMark keepIdentifyingUntilVuMarkIsFound() {
         RelicRecoveryVuMark vuMark = whereDoesTheRobotPutThisBox();
-        while (vuMark == RelicRecoveryVuMark.UNKNOWN) {
+        while (vuMark == RelicRecoveryVuMark.UNKNOWN)
             vuMark = whereDoesTheRobotPutThisBox();
-        }
         return vuMark;
     }
 
@@ -60,13 +56,12 @@ public class PictographIdentifier extends XbotSubsystem {
 
     @Override
     public String getClassName() {
-        return CLASS_NAME;
+        return PictographIdentifier.class.getName();
     }
 
     public static XbotSubsystem getInstance() {
-        if (instance == null) {
+        if (instance == null)
             instance = new PictographIdentifier();
-        }
         return instance;
     }
 }

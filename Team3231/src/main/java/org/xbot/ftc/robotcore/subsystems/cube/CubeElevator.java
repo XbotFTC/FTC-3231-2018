@@ -9,8 +9,6 @@ import org.xbot.ftc.robotcore.subsystems.XbotSubsystem;
 
 public class CubeElevator extends XbotSubsystem {
 
-    public static final String CLASS_NAME = CubeElevator.class.getName();
-    private static CubeElevator instance = null;
     private static boolean initialized = false;
 
     private DcMotor elevatorMotor = null;
@@ -50,13 +48,12 @@ public class CubeElevator extends XbotSubsystem {
 
     @Override
     public String getClassName() {
-        return CLASS_NAME;
+        return CubeElevator.class.getName();
     }
 
     public static XbotSubsystem getInstance() {
-        if (instance == null) {
+        if (instance == null)
             instance = new CubeElevator();
-        }
         return instance;
     }
 }

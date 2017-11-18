@@ -13,13 +13,13 @@ public class TeleOpJewelSmacker extends XbotOperatorSubHandler {
 
     @Override
     public void start() {
-        jewelArm = (JewelArm) robotSystemsManager.getSubsystem(JewelArm.CLASS_NAME);
+        jewelArm = (JewelArm) robotSystemsManager.getSubsystem(JewelArm.class.getName());
     }
 
     @Override
     public void handle(Gamepad gamepad1, Gamepad gamepad2) {
         if (gamepad2.dpad_up)
-            jewelArm.toggleArm();
+            jewelArm.setPosition(JewelArm.ArmPosition.UP);
     }
 
     @Override
