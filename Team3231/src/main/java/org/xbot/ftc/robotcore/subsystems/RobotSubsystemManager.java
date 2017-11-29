@@ -23,8 +23,11 @@ public class RobotSubsystemManager {
     }
 
     public void registerSubsystem(XbotSubsystem... subsystems) {
-        for (XbotSubsystem subsystem : subsystems)
+        System.out.println("TEST: " + subsystems.length);
+        for (XbotSubsystem subsystem : subsystems) {
+            System.out.println("TEST: " + subsystem.getClassName());
             registeredSubsystemsMap.put(subsystem.getClassName(), subsystem);
+        }
         for (XbotSubsystem subsystem : registeredSubsystemsMap.values()) {
             System.out.println("TEST: " + subsystem.getClassName());
         }

@@ -9,6 +9,7 @@ import org.xbot.ftc.robotcore.subsystems.XbotSubsystem;
 
 public class JewelArm extends XbotSubsystem {
 
+    private static XbotSubsystem instance = null;
     private static boolean initialized = false;
 
     private Servo jewelArmServo;

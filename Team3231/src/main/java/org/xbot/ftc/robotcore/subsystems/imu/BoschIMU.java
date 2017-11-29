@@ -19,6 +19,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 public class BoschIMU extends XbotSubsystem {
 
+    private static XbotSubsystem instance = null;
     private static boolean initialized = false;
 
     private boolean imuEnabled = false;

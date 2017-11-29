@@ -7,7 +7,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public abstract class XbotSubsystem {
 
-    protected static XbotSubsystem instance = null;
     protected HardwareMap hardwareMap;
     protected Telemetry telemetry;
     protected LinearOpMode opMode;

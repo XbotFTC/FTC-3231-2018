@@ -13,6 +13,7 @@ import org.xbot.ftc.robotcore.subsystems.XbotSubsystem;
 
 public class PictographIdentifier extends XbotSubsystem {
 
+    private static XbotSubsystem instance = null;
     private static boolean initialized = false;
 
     private VuforiaTrackables relicTrackables;

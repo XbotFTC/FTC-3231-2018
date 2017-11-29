@@ -12,6 +12,7 @@ import org.xbot.ftc.robotcore.subsystems.XbotSubsystem;
 
 public class Drive extends XbotSubsystem {
 
+    private static XbotSubsystem instance = null;
     private static boolean initialized = false;
 
     private DcMotor leftDriveMotor = null;

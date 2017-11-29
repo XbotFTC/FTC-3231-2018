@@ -9,6 +9,7 @@ import org.xbot.ftc.robotcore.subsystems.XbotSubsystem;
 
 public class CubeElevator extends XbotSubsystem {
 
+    private static XbotSubsystem instance = null;
     private static boolean initialized = false;
 
     private DcMotor elevatorMotor = null;
