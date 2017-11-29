@@ -25,6 +25,9 @@ public class RobotSubsystemManager {
     public void registerSubsystem(XbotSubsystem... subsystems) {
         for (XbotSubsystem subsystem : subsystems)
             registeredSubsystemsMap.put(subsystem.getClassName(), subsystem);
+        for (XbotSubsystem subsystem : registeredSubsystemsMap.values()) {
+            System.out.println("TEST: " + subsystem.getClassName());
+        }
     }
 
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
