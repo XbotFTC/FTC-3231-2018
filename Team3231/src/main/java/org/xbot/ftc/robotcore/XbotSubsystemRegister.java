@@ -8,11 +8,13 @@ import org.xbot.ftc.robotcore.subsystems.vision.PictographIdentifier;
 
 public class XbotSubsystemRegister {
 
-    public static void registerListeners() {
+    public void registerListeners(RobotSubsystemManager robotSubsystemManager) {
         //robotSubsystemManager.registerSubsystem(JewelArm.getInstance());
-        RobotSubsystemManager.registerSubsystem(Drive.getInstance());
-        RobotSubsystemManager.registerSubsystem(CubeElevator.getInstance());
-        RobotSubsystemManager.registerSubsystem(CubeGripper.getInstance());
+        robotSubsystemManager.registerSubsystem(Drive.getInstance(),
+                                                CubeElevator.getInstance(),
+                                                CubeGripper.getInstance());
+        //robotSubsystemManager.registerSubsystem(CubeElevator.getInstance());
+        //robotSubsystemManager.registerSubsystem(CubeGripper.getInstance());
         //robotSubsystemManager.registerSubsystem(BoschIMU.getInstance());
         //robotSubsystemManager.registerSubsystem(PictographIdentifier.getInstance());
 

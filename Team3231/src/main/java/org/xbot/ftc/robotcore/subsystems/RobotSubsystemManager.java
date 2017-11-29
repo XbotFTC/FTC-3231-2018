@@ -22,13 +22,14 @@ public class RobotSubsystemManager {
     private RobotSubsystemManager() {
     }
 
-    public static void registerSubsystem(XbotSubsystem subsystem) {
-        registeredSubsystemsMap.put(subsystem.getClassName(), subsystem);
+    public void registerSubsystem(XbotSubsystem... subsystems) {
+        for (XbotSubsystem subsystem : subsystems)
+            registeredSubsystemsMap.put(subsystem.getClassName(), subsystem);
     }
 
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         if (initialized) return;
-        XbotSubsystemRegister.registerListeners();
+        new XbotSubsystemRegister().registerListeners(this);
         gameClock = GameClock.getInstance();
         for (XbotSubsystem subsystem : registeredSubsystemsMap.values()) {
             subsystem.init(hardwareMap, telemetry);
