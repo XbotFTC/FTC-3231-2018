@@ -1,5 +1,6 @@
 package org.xbot.ftc.robotcore.subsystems.cube;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -12,8 +13,7 @@ public class CubeGripper extends XbotSubsystem {
     private static XbotSubsystem instance = null;
     private static boolean initialized = false;
 
-    private Servo leftServo;
-    private Servo rightServo;
+    private DcMotor gripperMotor;
 
     private CubeGripper() {
     }
@@ -21,48 +21,12 @@ public class CubeGripper extends XbotSubsystem {
     @Override
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         if (initialized) return;
-        leftServo = hardwareMap.get(Servo.class, XbotRobotConstants.GRIPPER_SERVO_LEFT);
-        rightServo = hardwareMap.get(Servo.class, XbotRobotConstants.GRIPPER_SERVO_RIGHT);
-
-        leftServo.setDirection(Servo.Direction.REVERSE);
-        rightServo.setDirection(Servo.Direction.FORWARD);
-
-        setServoPositions(0, 0);
-
+        gripperMotor = hardwareMap.get(DcMotor.class, XbotRobotConstants.GRIPPER_MOTOR);
         initialized = true;
     }
 
-    public void grip() {
-        setServoPositions(1, 1);
-    }
-
-    public void letItGo() {
-        setServoPositions(0, 0);
-    }
-
-    public void setServoPositions(double leftServoPos, double rightServoPos) {
-        leftServo.setPosition(leftServoPos);
-        rightServo.setPosition(rightServoPos);
-    }
-
-    public void setServoPositions(double power) {
-        setServoPositions(power, power);
-    }
-
-    public void setLeftServoPosition(double position) {
-        leftServo.setPosition(position);
-    }
-
-    public void setRightServoPosition(double position) {
-        rightServo.setPosition(position);
-    }
-
-    public double getLeftServoPosition() {
-        return leftServo.getPosition();
-    }
-
-    public double getRightServoPosition() {
-        return rightServo.getPosition();
+    public void setMotorPower(double power) {
+        gripperMotor.setPower(power);
     }
 
     @Override

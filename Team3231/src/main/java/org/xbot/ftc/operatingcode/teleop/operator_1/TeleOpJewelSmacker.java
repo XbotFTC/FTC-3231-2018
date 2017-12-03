@@ -1,7 +1,6 @@
-package org.xbot.ftc.operatingcode.teleop.operator_2;
+package org.xbot.ftc.operatingcode.teleop.operator_1;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.xbot.ftc.operatingcode.teleop.XbotOperatorSubHandler;
@@ -14,17 +13,20 @@ public class TeleOpJewelSmacker extends XbotOperatorSubHandler {
     @Override
     public void start() {
         jewelArm = (JewelArm) robotSystemsManager.getSubsystem(JewelArm.class.getName());
+        jewelArm.setPosition(JewelArm.ArmPosition.UP);
     }
 
     @Override
     public void handle(Gamepad gamepad1, Gamepad gamepad2) {
-        if (gamepad2.dpad_up)
+        if (gamepad1.x)
             jewelArm.setPosition(JewelArm.ArmPosition.UP);
+        else if (gamepad1.b)
+            jewelArm.setPosition(JewelArm.ArmPosition.DOWN);
     }
 
     @Override
     public void stop() {
-        jewelArm.setPosition(0);
+        jewelArm.setPosition(JewelArm.ArmPosition.UP);
     }
 
     @Override

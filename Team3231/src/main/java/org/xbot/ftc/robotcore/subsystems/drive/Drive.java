@@ -1,7 +1,8 @@
 package org.xbot.ftc.robotcore.subsystems.drive;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
@@ -33,6 +34,17 @@ public class Drive extends XbotSubsystem {
         TANK, ARCADE, MECANUM
     }
 
+    public enum TurnDirection {
+        LEFT(1, -1), RIGHT(-1, 1);
+        public final double LEFT_POWER;
+        public final double RIGHT_POWER;
+
+        TurnDirection(double leftPower, double rightPower) {
+            this.LEFT_POWER = leftPower;
+            this.RIGHT_POWER = rightPower;
+        }
+    }
+
     private Drive() {
     }
 
@@ -42,8 +54,8 @@ public class Drive extends XbotSubsystem {
         super.init(hardwareMap, telemetry);
         leftDriveMotor = hardwareMap.get(DcMotor.class, XbotRobotConstants.FRONT_LEFT_DRIVE_MOTOR);
         rightDriveMotor = hardwareMap.get(DcMotor.class, XbotRobotConstants.FRONT_RIGHT_DRIVE_MOTOR);
-        leftDriveMotor.setDirection(Direction.FORWARD);
-        rightDriveMotor.setDirection(Direction.FORWARD);
+        leftDriveMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightDriveMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         tankDrive = new TankDrive(this);
         arcadeDrive = new ArcadeDrive(this);
@@ -66,6 +78,11 @@ public class Drive extends XbotSubsystem {
         setMotorPowers(power, power);
     }
 
+    public void turn(TurnDirection direction, double motorPowerMultiplier) {
+        setMotorPowers(direction.LEFT_POWER * motorPowerMultiplier,
+                direction.RIGHT_POWER * motorPowerMultiplier);
+    }
+
     public void stop() {
         setMotorPowers(0);
     }
@@ -81,7 +98,7 @@ public class Drive extends XbotSubsystem {
         leftDriveMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightDriveMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        double previousMotorPowerMultiplier = motorPowerMultiplier;
+        double previousMultiplier = motorPowerMultiplier;
         setMotorPowerMultiplier(1.0);
         setMotorPowers(power);
 
@@ -96,9 +113,10 @@ public class Drive extends XbotSubsystem {
         }
 
         setMotorPowers(0);
-        setMotorPowerMultiplier(previousMotorPowerMultiplier);
-        leftDriveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightDriveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        setMotorPowerMultiplier(previousMultiplier);
+
+        leftDriveMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightDriveMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public DcMotor getLeftDriveMotor() {

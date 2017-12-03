@@ -15,7 +15,7 @@ public class JewelArm extends XbotSubsystem {
     private Servo jewelArmServo;
 
     public enum ArmPosition {
-        UP(0.0), DOWN(1.0);
+        UP(-1.0), DOWN(1.0);
 
         private final double ARM_POSITION;
         ArmPosition(final double ARM_POSITION) { this.ARM_POSITION = ARM_POSITION; }

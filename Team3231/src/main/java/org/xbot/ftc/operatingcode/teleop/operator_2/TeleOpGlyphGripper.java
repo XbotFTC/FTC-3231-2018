@@ -23,25 +23,21 @@ public class TeleOpGlyphGripper extends XbotOperatorSubHandler {
         double rightTriggerPos = Range.clip(gamepad2.right_trigger, 0.0, 1.0);
 
         if (leftTriggerPos > 0)
-            cubeGripper.setLeftServoPosition(0);
-        else
-            cubeGripper.setLeftServoPosition(1);
-        if (rightTriggerPos > 0)
-            cubeGripper.setRightServoPosition(0);
-        else
-            cubeGripper.setRightServoPosition(1);
+            cubeGripper.setMotorPower(-1);
+        else if (rightTriggerPos > 0) {
+            cubeGripper.setMotorPower(1);
+        } else {
+            cubeGripper.setMotorPower(0);
+        }
 
     }
 
     @Override
     public void stop() {
-        cubeGripper.setServoPositions(0, 0);
+        cubeGripper.setMotorPower(0);
     }
 
     @Override
     public void updateTelemetry(Telemetry telemetry) {
-        telemetry.addData("Left Servo Position: ", cubeGripper.getLeftServoPosition());
-        telemetry.addData("Right Servo Position: ", cubeGripper.getRightServoPosition());
-        telemetry.update();
     }
 }

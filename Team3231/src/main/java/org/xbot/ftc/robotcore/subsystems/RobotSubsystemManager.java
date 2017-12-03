@@ -23,32 +23,24 @@ public class RobotSubsystemManager {
     }
 
     public void registerSubsystem(XbotSubsystem... subsystems) {
-        System.out.println("TEST: " + subsystems.length);
-        for (XbotSubsystem subsystem : subsystems) {
-            System.out.println("TEST: " + subsystem.getClassName());
+        for (XbotSubsystem subsystem : subsystems)
             registeredSubsystemsMap.put(subsystem.getClassName(), subsystem);
-        }
-        for (XbotSubsystem subsystem : registeredSubsystemsMap.values()) {
-            System.out.println("TEST: " + subsystem.getClassName());
-        }
     }
 
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         if (initialized) return;
         new XbotSubsystemRegister().registerListeners(this);
         gameClock = GameClock.getInstance();
-        for (XbotSubsystem subsystem : registeredSubsystemsMap.values()) {
+        for (XbotSubsystem subsystem : registeredSubsystemsMap.values())
             subsystem.init(hardwareMap, telemetry);
-        }
         gameClock.resetClock();
 
         initialized = true;
     }
 
     public void setActiveOpMode(LinearOpMode opMode) {
-        for (XbotSubsystem subsystem : registeredSubsystemsMap.values()) {
+        for (XbotSubsystem subsystem : registeredSubsystemsMap.values())
             subsystem.setActiveOpMode(opMode);
-        }
     }
 
     public XbotSubsystem getSubsystem(String className) {
