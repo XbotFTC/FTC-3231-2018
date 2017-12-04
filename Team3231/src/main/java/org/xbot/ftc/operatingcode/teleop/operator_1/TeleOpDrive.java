@@ -1,8 +1,6 @@
 package org.xbot.ftc.operatingcode.teleop.operator_1;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.xbot.ftc.operatingcode.teleop.XbotOperatorSubHandler;
@@ -15,17 +13,17 @@ public class TeleOpDrive extends XbotOperatorSubHandler {
     private TankDrive tankDrive;
 
     @Override
-    public void start(HardwareMap hardwareMap, Telemetry telemetry) {
-        super.start(hardwareMap, telemetry);
-        drive = (Drive) robotSystemsManager.getSubsystem(Drive.CLASS_NAME);
+    public void start() {
+        drive = (Drive) robotSystemsManager.getSubsystem(Drive.class.getName());
         tankDrive = drive.getTankDrive();
+        drive.setMotorPowerMultiplier(1.0);
     }
 
     @Override
     public void handle(Gamepad gamepad1, Gamepad gamepad2) {
-        if (gamepad1.dpad_up) drive.setMotorPowerMultiplier(1.0);
-        else if (gamepad1.dpad_left || gamepad1.dpad_right) drive.setMotorPowerMultiplier(0.5);
-        else if (gamepad1.dpad_down) drive.setMotorPowerMultiplier(0.25);
+        if (gamepad1.dpad_up)
+            drive.setMotorPowerMultiplier(1.0);
+
         tankDrive.drive(gamepad1);
     }
 
@@ -35,9 +33,9 @@ public class TeleOpDrive extends XbotOperatorSubHandler {
     }
 
     @Override
-    public void updateTelemetry() {
-        telemetry.addData("LeftPower: ", drive.getLeftFrontDrive().getPower());
-        telemetry.addData("RightPower: ", drive.getRightFrontDrive().getPower());
+    public void updateTelemetry(Telemetry telemetry) {
+        telemetry.addData("LeftPower: ", drive.getLeftDriveMotor().getPower());
+        telemetry.addData("RightPower: ", drive.getRightDriveMotor().getPower());
         telemetry.update();
     }
 }

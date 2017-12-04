@@ -1,8 +1,8 @@
 package org.xbot.ftc.operatingcode.teleop.operator_2;
 
-
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.xbot.ftc.operatingcode.teleop.XbotOperatorSubHandler;
@@ -13,33 +13,31 @@ public class TeleOpGlyphGripper extends XbotOperatorSubHandler {
     private CubeGripper cubeGripper;
 
     @Override
-    public void start(HardwareMap hardwareMap, Telemetry telemetry) {
-        super.start(hardwareMap, telemetry);
-        cubeGripper = (CubeGripper) robotSystemsManager.getSubsystem(CubeGripper.CLASS_NAME);
+    public void start() {
+        cubeGripper = (CubeGripper) robotSystemsManager.getSubsystem(CubeGripper.class.getName());
     }
 
     @Override
     public void handle(Gamepad gamepad1, Gamepad gamepad2) {
-        if (gamepad2.left_trigger > 0.1) {
-            cubeGripper.setLeftServoPosition(1);
+        double leftTriggerPos = Range.clip(gamepad2.left_trigger, 0.0, 1.0);
+        double rightTriggerPos = Range.clip(gamepad2.right_trigger, 0.0, 1.0);
+
+        if (leftTriggerPos > 0)
+            cubeGripper.setMotorPower(-1);
+        else if (rightTriggerPos > 0) {
+            cubeGripper.setMotorPower(1);
         } else {
-            cubeGripper.setLeftServoPosition(0);
+            cubeGripper.setMotorPower(0);
         }
 
-        if (gamepad2.right_trigger > 0.1) {
-            cubeGripper.setRightServoPosition(0);
-        } else {
-            cubeGripper.setRightServoPosition(1);
-        }
     }
 
     @Override
     public void stop() {
-        cubeGripper.setServoPositions(0, 1);
+        cubeGripper.setMotorPower(0);
     }
 
     @Override
-    public void updateTelemetry() {
-
+    public void updateTelemetry(Telemetry telemetry) {
     }
 }
