@@ -45,9 +45,9 @@ public class BaseJewelAuto {
         telemetry.update();
 
         if (colorToTakeDown == colorDetected)
-            drive.turn(Drive.TurnDirection.RIGHT, Drive.DrivePower.HALF);
+            drive.turn(Drive.TurnDirection.RIGHT, Drive.DrivePower.FULL);
         else
-            drive.turn(Drive.TurnDirection.LEFT, Drive.DrivePower.HALF);
+            drive.turn(Drive.TurnDirection.LEFT, Drive.DrivePower.FULL);
 
         Thread.sleep(700);
 

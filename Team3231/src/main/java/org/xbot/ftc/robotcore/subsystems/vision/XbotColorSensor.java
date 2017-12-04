@@ -34,9 +34,9 @@ public class XbotColorSensor extends XbotSubsystem {
     }
 
     public Color getCurrentColorSeen() {
-        if (colorSensor.red() > 5) {
+        if (colorSensor.red() > colorSensor.blue()) {
             return Color.RED;
-        } else if (colorSensor.blue() > 5) {
+        } else if (colorSensor.blue() > colorSensor.red()) {
             return Color.BLUE;
         }
         return Color.OTHER;
