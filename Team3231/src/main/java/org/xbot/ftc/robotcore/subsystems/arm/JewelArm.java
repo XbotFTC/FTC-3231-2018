@@ -44,6 +44,12 @@ public class JewelArm extends XbotSubsystem {
         return jewelArmServo;
     }
 
+    public ArmPosition getArmPosition() {
+        return jewelArmServo.getPosition() > 0.0 && jewelArmServo.getPosition() <= 1.0
+                ? ArmPosition.DOWN
+                : ArmPosition.UP;
+    }
+
     @Override
     public String getClassName() {
         return JewelArm.class.getName();

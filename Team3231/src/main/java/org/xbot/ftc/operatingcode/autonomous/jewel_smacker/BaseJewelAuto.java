@@ -9,6 +9,7 @@ import org.xbot.ftc.robotcore.subsystems.RobotSubsystemManager;
 import org.xbot.ftc.robotcore.subsystems.arm.JewelArm;
 import org.xbot.ftc.robotcore.subsystems.drive.Drive;
 import org.xbot.ftc.robotcore.subsystems.vision.XbotColorSensor;
+import org.xbot.ftc.robotcore.utils.GameClock;
 
 public class BaseJewelAuto {
 
@@ -37,9 +38,10 @@ public class BaseJewelAuto {
         jewelArm = (JewelArm) robotSubsystemManager.getSubsystem(JewelArm.class.getName());
     }
 
-    public void run() throws InterruptedException {
+    public void run() {
+        GameClock gameClock = RobotSubsystemManager.getInstance().getGameClock();
         jewelArm.setPosition(JewelArm.ArmPosition.DOWN);
-        Thread.sleep(1000);
+        gameClock.delay(0.7);
         XbotColorSensor.Color colorDetected = keepDetectingUntilColorFound(xbotColorSensor);
         telemetry.addData("Color Detected: ", colorDetected);
         telemetry.update();
@@ -49,12 +51,12 @@ public class BaseJewelAuto {
         else
             drive.turn(Drive.TurnDirection.LEFT, Drive.DrivePower.FULL);
 
-        Thread.sleep(700);
+        gameClock.delay(0.7);
 
         drive.stop();
         jewelArm.setPosition(JewelArm.ArmPosition.UP);
 
-        Thread.sleep(1000);
+        gameClock.delay(1.0);
     }
 
     public XbotColorSensor getXbotColorSensor() {

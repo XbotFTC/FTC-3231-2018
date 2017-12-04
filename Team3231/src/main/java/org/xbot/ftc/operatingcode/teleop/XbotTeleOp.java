@@ -4,7 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.xbot.ftc.operatingcode.BaseRobot;
-import org.xbot.ftc.operatingcode.misc.XbotTelemetry;
+import org.xbot.ftc.robotcore.utils.GameClock;
+import org.xbot.ftc.robotcore.utils.XbotTelemetry;
 import org.xbot.ftc.robotcore.subsystems.RobotSubsystemManager;
 
 import java.util.ArrayList;
@@ -30,7 +31,8 @@ public class XbotTeleOp extends LinearOpMode {
 
         waitForStart();
 
-        RobotSubsystemManager.getInstance().getGameClock().resetClock();
+        GameClock gameClock = RobotSubsystemManager.getInstance().getGameClock();
+        gameClock.resetClock();
 
         for (XbotOperatorSubHandler handler : handlers) {
             handler.start();
@@ -44,6 +46,7 @@ public class XbotTeleOp extends LinearOpMode {
                 for (XbotTelemetry telemetryData : XbotTelemetry.getDataToAddToTelemetry()) {
                     telemetry.addData(telemetryData.getCaption(), telemetryData.getValue());
                 }
+                telemetry.addData("Game Clock: ", gameClock.getTimeElapsed());
                 XbotTelemetry.clearData();
                 telemetry.update();
             }

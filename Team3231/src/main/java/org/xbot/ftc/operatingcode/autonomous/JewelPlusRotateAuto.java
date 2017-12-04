@@ -13,9 +13,9 @@ import org.xbot.ftc.robotcore.subsystems.drive.Drive;
 import org.xbot.ftc.robotcore.subsystems.imu.BoschIMU;
 import org.xbot.ftc.robotcore.subsystems.vision.XbotColorSensor;
 
-@Autonomous(name="Main: Auto", group="Main")
+@Autonomous(name="Experimental: Jewel and Rotate", group="Testing")
 @Disabled
-public class AutoProgram extends LinearOpMode {
+public class JewelPlusRotateAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -32,6 +32,7 @@ public class AutoProgram extends LinearOpMode {
         waitForStart();
 
         robotSubsystemManager.getGameClock().resetClock();
+
         baseJewelAuto.run();
 
         double heading = Double.parseDouble(imu.getHeading());

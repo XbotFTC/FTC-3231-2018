@@ -1,6 +1,5 @@
 package org.xbot.ftc.robotcore.subsystems.drive;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -62,6 +61,7 @@ public class Drive extends XbotSubsystem {
     @Override
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         if (initialized) return;
+
         super.init(hardwareMap, telemetry);
         leftDriveMotor = hardwareMap.get(DcMotor.class, XbotRobotConstants.FRONT_LEFT_DRIVE_MOTOR);
         rightDriveMotor = hardwareMap.get(DcMotor.class, XbotRobotConstants.FRONT_RIGHT_DRIVE_MOTOR);

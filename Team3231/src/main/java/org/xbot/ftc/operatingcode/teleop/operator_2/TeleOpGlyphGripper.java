@@ -1,11 +1,8 @@
 package org.xbot.ftc.operatingcode.teleop.operator_2;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.xbot.ftc.operatingcode.misc.XbotTelemetry;
 import org.xbot.ftc.operatingcode.teleop.XbotOperatorSubHandler;
 import org.xbot.ftc.robotcore.subsystems.cube.CubeGripper;
 

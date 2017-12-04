@@ -2,8 +2,7 @@ package org.xbot.ftc.operatingcode.teleop.operator_1;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.xbot.ftc.operatingcode.misc.XbotTelemetry;
+import org.xbot.ftc.robotcore.utils.XbotTelemetry;
 import org.xbot.ftc.operatingcode.teleop.XbotOperatorSubHandler;
 import org.xbot.ftc.robotcore.subsystems.drive.Drive;
 import org.xbot.ftc.robotcore.subsystems.drive.TankDrive;

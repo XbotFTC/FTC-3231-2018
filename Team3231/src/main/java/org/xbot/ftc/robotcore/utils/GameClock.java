@@ -21,6 +21,11 @@ public class GameClock {
         return secondsElapsed;
     }
 
+    public void delay(double seconds) {
+        double timeGoal = secondsElapsed + seconds;
+        while (timeGoal > getTimeElapsed());
+    }
+
     public static GameClock getInstance() {
         if (instance == null) {
             instance = new GameClock();
