@@ -1,6 +1,5 @@
 package org.xbot.ftc.operatingcode.autonomous;
 
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 

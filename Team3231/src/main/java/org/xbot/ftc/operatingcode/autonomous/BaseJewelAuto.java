@@ -12,7 +12,6 @@ import org.xbot.ftc.robotcore.subsystems.vision.XbotColorSensor;
 
 public class BaseJewelAuto {
 
-
     public enum AllianceColor {
         BLUE, RED
     }
