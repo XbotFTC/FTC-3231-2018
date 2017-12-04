@@ -1,4 +1,4 @@
-package org.xbot.ftc.operatingcode.autonomous;
+package org.xbot.ftc.operatingcode.autonomous.jewel_smacker;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -12,31 +12,49 @@ import org.xbot.ftc.robotcore.subsystems.vision.XbotColorSensor;
 
 public class BaseJewelAuto {
 
-    public enum AllianceColor {
-        BLUE, RED
-    }
+    private XbotColorSensor.Color colorToTakeDown;
 
-    private AllianceColor colorToTakeDown;
-
-    private final LinearOpMode opMode;
+    private LinearOpMode opMode;
+    private Telemetry telemetry;
 
     private XbotColorSensor xbotColorSensor;
     private Drive drive;
     private JewelArm jewelArm;
 
-    public BaseJewelAuto(AllianceColor teamColor, LinearOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry) {
-        if (teamColor == AllianceColor.BLUE)
-            colorToTakeDown = AllianceColor.RED;
+    public BaseJewelAuto(XbotColorSensor.Color teamColor, LinearOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry) {
+        if (teamColor == XbotColorSensor.Color.BLUE)
+            colorToTakeDown = XbotColorSensor.Color.RED;
         else
-            colorToTakeDown = AllianceColor.BLUE;
+            colorToTakeDown = XbotColorSensor.Color.BLUE;
 
         BaseRobot.initOpMode(opMode, hardwareMap, telemetry);
         RobotSubsystemManager robotSubsystemManager = RobotSubsystemManager.getInstance();
         this.opMode = opMode;
+        this.telemetry = telemetry;
 
         xbotColorSensor = (XbotColorSensor) robotSubsystemManager.getSubsystem(XbotColorSensor.class.getName());
         drive = (Drive) robotSubsystemManager.getSubsystem(Drive.class.getName());
         jewelArm = (JewelArm) robotSubsystemManager.getSubsystem(JewelArm.class.getName());
+    }
+
+    public void run() throws InterruptedException {
+        jewelArm.setPosition(JewelArm.ArmPosition.DOWN);
+        Thread.sleep(1000);
+        XbotColorSensor.Color colorDetected = keepDetectingUntilColorFound(xbotColorSensor);
+        telemetry.addData("Color Detected: ", colorDetected);
+        telemetry.update();
+
+        if (colorToTakeDown == colorDetected)
+            drive.turn(Drive.TurnDirection.RIGHT, Drive.DrivePower.HALF);
+        else
+            drive.turn(Drive.TurnDirection.LEFT, Drive.DrivePower.HALF);
+
+        Thread.sleep(700);
+
+        drive.stop();
+        jewelArm.setPosition(JewelArm.ArmPosition.UP);
+
+        Thread.sleep(1000);
     }
 
     public XbotColorSensor getXbotColorSensor() {
@@ -51,7 +69,7 @@ public class BaseJewelAuto {
         return jewelArm;
     }
 
-    public XbotColorSensor.Color keepDetecting(XbotColorSensor colorSensor) {
+    private XbotColorSensor.Color keepDetectingUntilColorFound(XbotColorSensor colorSensor) {
         XbotColorSensor.Color currentColor = colorSensor.getCurrentColorSeen();
         while (currentColor == XbotColorSensor.Color.OTHER && opMode.opModeIsActive()) {
             currentColor = colorSensor.getCurrentColorSeen();

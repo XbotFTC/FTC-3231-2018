@@ -34,8 +34,19 @@ public class Drive extends XbotSubsystem {
         TANK, ARCADE, MECANUM
     }
 
+    public enum DrivePower {
+        FULL(1.0), HALF(0.5), QUARTER(0.25);
+
+        public final double POWER;
+
+        DrivePower(double power) {
+            this.POWER = power;
+        }
+    }
+
     public enum TurnDirection {
         LEFT(1, -1), RIGHT(-1, 1);
+
         public final double LEFT_POWER;
         public final double RIGHT_POWER;
 
@@ -78,9 +89,9 @@ public class Drive extends XbotSubsystem {
         setMotorPowers(power, power);
     }
 
-    public void turn(TurnDirection direction, double motorPowerMultiplier) {
-        setMotorPowers(direction.LEFT_POWER * motorPowerMultiplier,
-                direction.RIGHT_POWER * motorPowerMultiplier);
+    public void turn(TurnDirection direction, DrivePower drivePower) {
+        setMotorPowers(direction.LEFT_POWER * drivePower.POWER,
+                direction.RIGHT_POWER * drivePower.POWER);
     }
 
     public void stop() {

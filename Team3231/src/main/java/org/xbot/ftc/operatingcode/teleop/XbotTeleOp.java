@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.xbot.ftc.operatingcode.BaseRobot;
+import org.xbot.ftc.operatingcode.misc.XbotTelemetry;
 import org.xbot.ftc.robotcore.subsystems.RobotSubsystemManager;
-import org.xbot.ftc.robotcore.subsystems.arm.JewelArm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +32,6 @@ public class XbotTeleOp extends LinearOpMode {
 
         RobotSubsystemManager.getInstance().getGameClock().resetClock();
 
-        JewelArm arm =
-                (JewelArm) RobotSubsystemManager.getInstance().getSubsystem(JewelArm.class.getName());
-        arm.setPosition(JewelArm.ArmPosition.UP);
-
         for (XbotOperatorSubHandler handler : handlers) {
             handler.start();
         }
@@ -43,7 +39,13 @@ public class XbotTeleOp extends LinearOpMode {
         while (opModeIsActive()) {
             for (XbotOperatorSubHandler handler : handlers) {
                 handler.handle(gamepad1, gamepad2);
-                handler.updateTelemetry(telemetry);
+                handler.updateTelemetry();
+
+                for (XbotTelemetry telemetryData : XbotTelemetry.getDataToAddToTelemetry()) {
+                    telemetry.addData(telemetryData.getCaption(), telemetryData.getValue());
+                }
+                XbotTelemetry.clearData();
+                telemetry.update();
             }
         }
 

@@ -17,7 +17,7 @@ public abstract class XbotSubsystem {
     }
 
     public String getClassName() {
-        throw new UnsupportedOperationException("Subsystem Name Not Set");
+        throw new UnsupportedOperationException("Subsystem Class Name Not Set");
     }
 
     public void setActiveOpMode(LinearOpMode opMode) {
