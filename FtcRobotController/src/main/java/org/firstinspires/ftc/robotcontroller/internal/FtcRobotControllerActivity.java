@@ -480,7 +480,7 @@ public class FtcRobotControllerActivity extends Activity
     }
     else if (id == R.id.action_restart_robot) {
       dimmer.handleDimTimer();
-      AppUtil.getInstance().showToast(UILocation.BOTH, context, context.getString(R.string.toastRestartingRobot));
+      AppUtil.getInstance().showToast(UILocation.BOTH, context, "Umm yeah reset");
       requestRobotRestart();
       return true;
     }

@@ -3,7 +3,9 @@ package org.xbot.ftc.operatingcode.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.xbot.ftc.operatingcode.BaseRobot;
 import org.xbot.ftc.robotcore.subsystems.RobotSubsystemManager;
+import org.xbot.ftc.robotcore.subsystems.arm.JewelArm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,36 +13,42 @@ import java.util.List;
 @TeleOp(name="Main: TeleOp", group="Main")
 public class XbotTeleOp extends LinearOpMode {
 
-    private static List<XbotTeleOpHandler> listeners = new ArrayList<>();
+    private List<XbotOperatorSubHandler> handlers = new ArrayList<>();
 
-    public static void registerListener(XbotTeleOpHandler listener) {
-        listeners.add(listener);
+    public void registerHandler(XbotOperatorSubHandler listener) {
+        handlers.add(listener);
     }
 
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry.addData("Listeners:", "Registering");
         telemetry.update();
-        RobotSubsystemManager.getInstance().init(hardwareMap);
-        XbotTeleOpSubHandlerRegister.registerListeners();
+        BaseRobot.initOpMode(this, hardwareMap, telemetry);
+        new XbotTeleOpSubHandlerRegister().registerListeners(this);
         telemetry.addData("Listeners:", "Registered");
         telemetry.update();
 
         waitForStart();
 
-        for (XbotTeleOpHandler listener : listeners) {
-            listener.start(hardwareMap, telemetry);
+        RobotSubsystemManager.getInstance().getGameClock().resetClock();
+
+        JewelArm arm =
+                (JewelArm) RobotSubsystemManager.getInstance().getSubsystem(JewelArm.class.getName());
+        arm.setPosition(JewelArm.ArmPosition.UP);
+
+        for (XbotOperatorSubHandler handler : handlers) {
+            handler.start();
         }
 
         while (opModeIsActive()) {
-            for (XbotTeleOpHandler listener : listeners) {
-                listener.handle(gamepad1, gamepad2);
-                listener.updateTelemetry();
+            for (XbotOperatorSubHandler handler : handlers) {
+                handler.handle(gamepad1, gamepad2);
+                handler.updateTelemetry(telemetry);
             }
         }
 
-        for (XbotTeleOpHandler listener : listeners) {
-            listener.stop();
+        for (XbotOperatorSubHandler handler : handlers) {
+            handler.stop();
         }
     }
 }
