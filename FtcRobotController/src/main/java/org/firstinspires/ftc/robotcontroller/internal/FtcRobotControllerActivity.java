@@ -592,12 +592,12 @@ public class FtcRobotControllerActivity extends Activity
   }
 
   private void requestRobotRestart() {
-    AppUtil.getInstance().showToast(UILocation.BOTH, AppUtil.getDefContext().getString(R.string.toastRestartingRobot));
+    AppUtil.getInstance().showToast(UILocation.BOTH, "WAIT WAIT WAIT I'm restarting");
     //
     shutdownRobot();
     requestRobotSetup();
     //
-    AppUtil.getInstance().showToast(UILocation.BOTH, AppUtil.getDefContext().getString(R.string.toastRestartRobotComplete));
+    AppUtil.getInstance().showToast(UILocation.BOTH, "Ok I restarted you may proceed");
   }
 
   protected void hittingMenuButtonBrightensScreen() {
