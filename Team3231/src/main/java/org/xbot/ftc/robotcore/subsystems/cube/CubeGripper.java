@@ -39,4 +39,10 @@ public class CubeGripper extends XbotSubsystem {
             instance = new CubeGripper();
         return instance;
     }
+
+    @Override
+    public void shutdownSubystem() {
+        gripperMotor.setPower(0);
+        initialized = false;
+    }
 }

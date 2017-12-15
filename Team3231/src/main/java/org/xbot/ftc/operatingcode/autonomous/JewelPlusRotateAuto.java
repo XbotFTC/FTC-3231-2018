@@ -14,14 +14,13 @@ import org.xbot.ftc.robotcore.subsystems.imu.BoschIMU;
 import org.xbot.ftc.robotcore.subsystems.vision.XbotColorSensor;
 
 @Autonomous(name="Experimental: Jewel and Rotate", group="Testing")
-@Disabled
 public class JewelPlusRotateAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
         BaseRobot.initOpMode(this, hardwareMap, telemetry);
         RobotSubsystemManager robotSubsystemManager = RobotSubsystemManager.getInstance();
-        BaseJewelAuto baseJewelAuto = new BaseJewelAuto(XbotColorSensor.Color.BLUE, this, hardwareMap, telemetry);
+        BaseJewelAuto baseJewelAuto = new BaseJewelAuto(XbotColorSensor.Color.RED, this, hardwareMap, telemetry);
         Drive drive = (Drive) robotSubsystemManager.getSubsystem(Drive.class.getName());
         CubeElevator cubeElevator =
                 (CubeElevator) robotSubsystemManager.getSubsystem(CubeElevator.class.getName());
@@ -36,12 +35,16 @@ public class JewelPlusRotateAuto extends LinearOpMode {
         baseJewelAuto.run();
 
         double heading = Double.parseDouble(imu.getHeading());
-        while (heading > (90 - 5) && heading < (90 + 5)) {
+        telemetry.addData("Heading: ", heading);
+        telemetry.update();
+        while (heading < (90 - 5) && heading > (90 + 5) && opModeIsActive()) {
+            heading = Double.parseDouble(imu.getHeading());
             if (heading < 90) {
                 drive.turn(Drive.TurnDirection.RIGHT, Drive.DrivePower.HALF);
             } else {
                 drive.turn(Drive.TurnDirection.LEFT, Drive.DrivePower.HALF);
             }
         }
+        RobotSubsystemManager.getInstance().stop();
     }
 }

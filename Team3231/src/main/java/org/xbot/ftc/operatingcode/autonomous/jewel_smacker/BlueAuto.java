@@ -3,6 +3,7 @@ package org.xbot.ftc.operatingcode.autonomous.jewel_smacker;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.xbot.ftc.robotcore.subsystems.RobotSubsystemManager;
 import org.xbot.ftc.robotcore.subsystems.vision.XbotColorSensor;
 
 @Autonomous(name="Jewel: Blue", group="Test")
@@ -13,5 +14,6 @@ public class BlueAuto extends LinearOpMode {
         BaseJewelAuto baseJewelAuto = new BaseJewelAuto(XbotColorSensor.Color.BLUE, this, hardwareMap, telemetry);
         waitForStart();
         baseJewelAuto.run();
+        RobotSubsystemManager.getInstance().stop();
     }
 }

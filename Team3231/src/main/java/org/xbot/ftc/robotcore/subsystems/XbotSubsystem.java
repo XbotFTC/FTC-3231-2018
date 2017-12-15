@@ -23,4 +23,6 @@ public abstract class XbotSubsystem {
     public void setActiveOpMode(LinearOpMode opMode) {
         this.opMode = opMode;
     }
+
+    public abstract void shutdownSubystem();
 }

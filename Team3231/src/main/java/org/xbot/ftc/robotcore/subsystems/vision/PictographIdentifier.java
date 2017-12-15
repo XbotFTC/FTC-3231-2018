@@ -56,6 +56,11 @@ public class PictographIdentifier extends XbotSubsystem {
     }
 
     @Override
+    public void shutdownSubystem() {
+        initialized = false;
+    }
+
+    @Override
     public String getClassName() {
         return PictographIdentifier.class.getName();
     }

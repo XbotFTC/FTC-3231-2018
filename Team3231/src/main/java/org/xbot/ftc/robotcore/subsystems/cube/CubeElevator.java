@@ -56,4 +56,10 @@ public class CubeElevator extends XbotSubsystem {
             instance = new CubeElevator();
         return instance;
     }
+
+    @Override
+    public void shutdownSubystem() {
+        stop();
+        initialized = false;
+    }
 }

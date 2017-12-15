@@ -43,6 +43,11 @@ public class XbotColorSensor extends XbotSubsystem {
     }
 
     @Override
+    public void shutdownSubystem() {
+        initialized = false;
+    }
+
+    @Override
     public String getClassName() {
         return XbotColorSensor.class.getName();
     }

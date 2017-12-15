@@ -38,6 +38,12 @@ public class RobotSubsystemManager {
         initialized = true;
     }
 
+    public void stop() {
+        for (XbotSubsystem subsystem : registeredSubsystemsMap.values())
+            subsystem.shutdownSubystem();
+        initialized = false;
+    }
+
     public void setActiveOpMode(LinearOpMode opMode) {
         for (XbotSubsystem subsystem : registeredSubsystemsMap.values())
             subsystem.setActiveOpMode(opMode);

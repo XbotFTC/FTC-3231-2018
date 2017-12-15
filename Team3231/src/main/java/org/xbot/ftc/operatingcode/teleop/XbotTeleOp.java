@@ -55,5 +55,6 @@ public class XbotTeleOp extends LinearOpMode {
         for (XbotOperatorSubHandler handler : handlers) {
             handler.stop();
         }
+        RobotSubsystemManager.getInstance().stop();
     }
 }

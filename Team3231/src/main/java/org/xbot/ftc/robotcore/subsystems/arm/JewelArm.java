@@ -28,6 +28,7 @@ public class JewelArm extends XbotSubsystem {
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         if (initialized) return;
         jewelArmServo = hardwareMap.get(Servo.class, XbotRobotConstants.JEWEL_SMACKER_SERVO);
+        jewelArmServo.setDirection(Servo.Direction.FORWARD);
         setPosition(ArmPosition.UP);
         initialized = true;
     }
@@ -59,5 +60,11 @@ public class JewelArm extends XbotSubsystem {
         if (instance == null)
             instance = new JewelArm();
         return instance;
+    }
+
+    @Override
+    public void shutdownSubystem() {
+        setPosition(ArmPosition.UP);
+        initialized = false;
     }
 }

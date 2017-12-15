@@ -147,6 +147,12 @@ public class Drive extends XbotSubsystem {
     }
 
     @Override
+    public void shutdownSubystem() {
+        stop();
+        initialized = false;
+    }
+
+    @Override
     public String getClassName() {
         return Drive.class.getName();
     }

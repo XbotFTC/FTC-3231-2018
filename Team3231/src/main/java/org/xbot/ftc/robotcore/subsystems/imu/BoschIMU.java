@@ -87,6 +87,12 @@ public class BoschIMU extends XbotSubsystem {
         return formatDegrees(AngleUnit.DEGREES.fromUnit(angleUnit, angle));
     }
 
+    @Override
+    public void shutdownSubystem() {
+        disableImu();
+        initialized = false;
+    }
+
     private String formatDegrees(double degrees) {
         return String.format(Locale.getDefault(), "%.1f", AngleUnit.DEGREES.normalize(degrees));
     }

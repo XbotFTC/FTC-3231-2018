@@ -32,5 +32,6 @@ public class VisionTest extends LinearOpMode {
             telemetry.addData("Where To Place", pictographIdentifier.whereDoesTheRobotPutThisBox());
             telemetry.update();
         }
+        robotSubsystemManager.stop();
     }
 }
