@@ -12,6 +12,7 @@ public class GameClock {
 
     public void resetClock() {
         secondsElapsed = 0.0;
+        previousSystemTime = System.currentTimeMillis();
     }
 
     public double getTimeElapsed() {
@@ -19,6 +20,11 @@ public class GameClock {
         secondsElapsed += (currentTime - previousSystemTime) / 1000.0;
         previousSystemTime = currentTime;
         return secondsElapsed;
+    }
+
+    public void delay(double seconds) {
+        double timeGoal = secondsElapsed + seconds;
+        while (timeGoal > getTimeElapsed());
     }
 
     public static GameClock getInstance() {

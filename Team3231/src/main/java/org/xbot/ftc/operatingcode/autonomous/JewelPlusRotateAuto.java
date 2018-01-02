@@ -5,44 +5,47 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.xbot.ftc.operatingcode.BaseRobot;
+import org.xbot.ftc.operatingcode.autonomous.jewel_smacker.BaseJewelAuto;
 import org.xbot.ftc.robotcore.subsystems.RobotSubsystemManager;
 import org.xbot.ftc.robotcore.subsystems.cube.CubeElevator;
 import org.xbot.ftc.robotcore.subsystems.cube.CubeGripper;
 import org.xbot.ftc.robotcore.subsystems.drive.Drive;
+import org.xbot.ftc.robotcore.subsystems.imu.BoschIMU;
+import org.xbot.ftc.robotcore.subsystems.vision.XbotColorSensor;
 
-@Autonomous(name="Main: Auto", group="Main")
+@Autonomous(name="Experimental: Jewel and Rotate", group="Testing")
 @Disabled
-public class AutoProgram extends LinearOpMode {
+public class JewelPlusRotateAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
         BaseRobot.initOpMode(this, hardwareMap, telemetry);
         RobotSubsystemManager robotSubsystemManager = RobotSubsystemManager.getInstance();
+        BaseJewelAuto baseJewelAuto = new BaseJewelAuto(XbotColorSensor.Color.RED, this, hardwareMap, telemetry);
         Drive drive = (Drive) robotSubsystemManager.getSubsystem(Drive.class.getName());
         CubeElevator cubeElevator =
                 (CubeElevator) robotSubsystemManager.getSubsystem(CubeElevator.class.getName());
         CubeGripper cubeGripper =
                 (CubeGripper) robotSubsystemManager.getSubsystem(CubeGripper.class.getName());
-
+        BoschIMU imu = (BoschIMU) robotSubsystemManager.getSubsystem(BoschIMU.class.getName());
+        imu.enableImu();
         waitForStart();
+
         robotSubsystemManager.getGameClock().resetClock();
 
-        while (opModeIsActive()) {
-            cubeGripper.setMotorPower(1);
-            Thread.sleep(300);
-            cubeGripper.setMotorPower(0);
-            cubeElevator.lift();
-            Thread.sleep(400);
-            cubeElevator.stop();
-            drive.encoderDrive(1, 10, 10, 5);
-            drive.encoderDrive(1, 5, -5, 2);
-            drive.encoderDrive(1, 8, 8, 4);
-            cubeElevator.down();
-            Thread.sleep(200);
-            cubeElevator.stop();
-            cubeGripper.setMotorPower(-1);
-            Thread.sleep(300);
-            cubeElevator.setPower(0);
+        baseJewelAuto.run();
+
+        double heading = Double.parseDouble(imu.getHeading());
+        telemetry.addData("Heading: ", heading);
+        telemetry.update();
+        while (heading < (90 - 5) && heading > (90 + 5) && opModeIsActive()) {
+            heading = Double.parseDouble(imu.getHeading());
+            if (heading < 90) {
+                drive.turn(Drive.TurnDirection.RIGHT, Drive.DrivePower.HALF);
+            } else {
+                drive.turn(Drive.TurnDirection.LEFT, Drive.DrivePower.HALF);
+            }
         }
+        RobotSubsystemManager.getInstance().stop();
     }
 }

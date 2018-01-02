@@ -132,7 +132,7 @@ public class SensorBNO055IMUCalibration extends LinearOpMode
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.loggingEnabled = true;
         parameters.loggingTag     = "IMU";
-        imu = hardwareMap.get(BNO055IMU.class, "adafruit_imu");
+        imu = hardwareMap.get(BNO055IMU.class, "bosch_imu");
         imu.initialize(parameters);
 
         composeTelemetry();

@@ -13,7 +13,7 @@ import java.util.Map;
 public class RobotSubsystemManager {
 
     private static RobotSubsystemManager instance = null;
-    private boolean initialized = false;
+    private static boolean initialized = false;
 
     private static Map<String, XbotSubsystem> registeredSubsystemsMap = new HashMap<>();
 
@@ -22,13 +22,13 @@ public class RobotSubsystemManager {
     private RobotSubsystemManager() {
     }
 
-    public void registerSubsystem(XbotSubsystem... subsystems) {
-        for (XbotSubsystem subsystem : subsystems)
-            registeredSubsystemsMap.put(subsystem.getClassName(), subsystem);
+    public void registerSubsystem(XbotSubsystem subsystem) {
+        registeredSubsystemsMap.put(subsystem.getClassName(), subsystem);
     }
 
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         if (initialized) return;
+
         new XbotSubsystemRegister().registerListeners(this);
         gameClock = GameClock.getInstance();
         for (XbotSubsystem subsystem : registeredSubsystemsMap.values())
@@ -36,6 +36,12 @@ public class RobotSubsystemManager {
         gameClock.resetClock();
 
         initialized = true;
+    }
+
+    public void stop() {
+        for (XbotSubsystem subsystem : registeredSubsystemsMap.values())
+            subsystem.shutdownSubystem();
+        initialized = false;
     }
 
     public void setActiveOpMode(LinearOpMode opMode) {

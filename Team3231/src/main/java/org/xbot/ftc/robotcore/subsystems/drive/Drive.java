@@ -1,6 +1,5 @@
 package org.xbot.ftc.robotcore.subsystems.drive;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -34,8 +33,19 @@ public class Drive extends XbotSubsystem {
         TANK, ARCADE, MECANUM
     }
 
+    public enum DrivePower {
+        FULL(1.0), HALF(0.5), QUARTER(0.25);
+
+        public final double POWER;
+
+        DrivePower(double power) {
+            this.POWER = power;
+        }
+    }
+
     public enum TurnDirection {
         LEFT(1, -1), RIGHT(-1, 1);
+
         public final double LEFT_POWER;
         public final double RIGHT_POWER;
 
@@ -51,6 +61,7 @@ public class Drive extends XbotSubsystem {
     @Override
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         if (initialized) return;
+
         super.init(hardwareMap, telemetry);
         leftDriveMotor = hardwareMap.get(DcMotor.class, XbotRobotConstants.FRONT_LEFT_DRIVE_MOTOR);
         rightDriveMotor = hardwareMap.get(DcMotor.class, XbotRobotConstants.FRONT_RIGHT_DRIVE_MOTOR);
@@ -78,9 +89,9 @@ public class Drive extends XbotSubsystem {
         setMotorPowers(power, power);
     }
 
-    public void turn(TurnDirection direction, double motorPowerMultiplier) {
-        setMotorPowers(direction.LEFT_POWER * motorPowerMultiplier,
-                direction.RIGHT_POWER * motorPowerMultiplier);
+    public void turn(TurnDirection direction, DrivePower drivePower) {
+        setMotorPowers(direction.LEFT_POWER * drivePower.POWER,
+                direction.RIGHT_POWER * drivePower.POWER);
     }
 
     public void stop() {
@@ -133,6 +144,12 @@ public class Drive extends XbotSubsystem {
 
     public ArcadeDrive getArcadeDrive() {
         return arcadeDrive;
+    }
+
+    @Override
+    public void shutdownSubystem() {
+        setMotorPowers(0);
+        initialized = false;
     }
 
     @Override

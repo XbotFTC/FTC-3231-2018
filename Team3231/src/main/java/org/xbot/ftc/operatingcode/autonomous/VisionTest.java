@@ -13,7 +13,7 @@ import org.xbot.ftc.robotcore.subsystems.drive.Drive;
 import org.xbot.ftc.robotcore.subsystems.vision.PictographIdentifier;
 import org.xbot.ftc.robotcore.subsystems.vision.XbotColorSensor;
 
-@Autonomous(name="Main: Vision", group="Main")
+@Autonomous(name="Experimental: Vision", group="Testing")
 @Disabled
 public class VisionTest extends LinearOpMode {
 
@@ -32,5 +32,6 @@ public class VisionTest extends LinearOpMode {
             telemetry.addData("Where To Place", pictographIdentifier.whereDoesTheRobotPutThisBox());
             telemetry.update();
         }
+        robotSubsystemManager.stop();
     }
 }

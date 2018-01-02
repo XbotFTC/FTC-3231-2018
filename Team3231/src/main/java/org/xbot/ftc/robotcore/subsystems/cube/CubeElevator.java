@@ -21,7 +21,6 @@ public class CubeElevator extends XbotSubsystem {
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         if (initialized) return;
         elevatorMotor = hardwareMap.get(DcMotor.class, XbotRobotConstants.ELEVATOR_MOTOR);
-
         initialized = true;
     }
 
@@ -56,5 +55,11 @@ public class CubeElevator extends XbotSubsystem {
         if (instance == null)
             instance = new CubeElevator();
         return instance;
+    }
+
+    @Override
+    public void shutdownSubystem() {
+        stop();
+        initialized = false;
     }
 }

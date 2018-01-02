@@ -30,7 +30,6 @@ public class TeleOpJewelSmacker extends XbotOperatorSubHandler {
     }
 
     @Override
-    public void updateTelemetry(Telemetry telemetry) {
-
+    public void updateTelemetry() {
     }
 }
