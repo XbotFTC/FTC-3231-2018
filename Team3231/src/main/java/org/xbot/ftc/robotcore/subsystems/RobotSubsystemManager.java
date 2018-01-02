@@ -13,7 +13,7 @@ import java.util.Map;
 public class RobotSubsystemManager {
 
     private static RobotSubsystemManager instance = null;
-    private boolean initialized = false;
+    private static boolean initialized = false;
 
     private static Map<String, XbotSubsystem> registeredSubsystemsMap = new HashMap<>();
 

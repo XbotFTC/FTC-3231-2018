@@ -148,7 +148,7 @@ public class Drive extends XbotSubsystem {
 
     @Override
     public void shutdownSubystem() {
-        stop();
+        setMotorPowers(0);
         initialized = false;
     }
 

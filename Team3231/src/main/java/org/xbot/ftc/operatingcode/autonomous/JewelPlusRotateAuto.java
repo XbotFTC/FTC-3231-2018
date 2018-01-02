@@ -14,6 +14,7 @@ import org.xbot.ftc.robotcore.subsystems.imu.BoschIMU;
 import org.xbot.ftc.robotcore.subsystems.vision.XbotColorSensor;
 
 @Autonomous(name="Experimental: Jewel and Rotate", group="Testing")
+@Disabled
 public class JewelPlusRotateAuto extends LinearOpMode {
 
     @Override

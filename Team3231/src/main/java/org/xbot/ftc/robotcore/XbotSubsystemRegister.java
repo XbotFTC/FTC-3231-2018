@@ -16,8 +16,8 @@ public class XbotSubsystemRegister {
         robotSubsystemManager.registerSubsystem(CubeElevator.getInstance());
         robotSubsystemManager.registerSubsystem(CubeGripper.getInstance());
         robotSubsystemManager.registerSubsystem(XbotColorSensor.getInstance());
-        robotSubsystemManager.registerSubsystem(PictographIdentifier.getInstance());
+        //robotSubsystemManager.registerSubsystem(PictographIdentifier.getInstance());
         robotSubsystemManager.registerSubsystem(JewelArm.getInstance());
-        robotSubsystemManager.registerSubsystem(BoschIMU.getInstance());
+        //[robotSubsystemManager.registerSubsystem(BoschIMU.getInstance());
     }
 }

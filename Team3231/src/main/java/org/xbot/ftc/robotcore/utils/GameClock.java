@@ -12,6 +12,7 @@ public class GameClock {
 
     public void resetClock() {
         secondsElapsed = 0.0;
+        previousSystemTime = System.currentTimeMillis();
     }
 
     public double getTimeElapsed() {

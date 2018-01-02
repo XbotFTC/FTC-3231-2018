@@ -10,6 +10,7 @@ import org.xbot.ftc.robotcore.subsystems.arm.JewelArm;
 import org.xbot.ftc.robotcore.subsystems.drive.Drive;
 import org.xbot.ftc.robotcore.subsystems.vision.XbotColorSensor;
 import org.xbot.ftc.robotcore.utils.GameClock;
+import org.xbot.ftc.robotcore.utils.XbotTelemetry;
 
 public class BaseJewelAuto {
 
@@ -25,8 +26,10 @@ public class BaseJewelAuto {
     public BaseJewelAuto(XbotColorSensor.Color teamColor, LinearOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry) {
         if (teamColor == XbotColorSensor.Color.BLUE)
             colorToTakeDown = XbotColorSensor.Color.RED;
-        else
+        else if (teamColor == XbotColorSensor.Color.RED)
             colorToTakeDown = XbotColorSensor.Color.BLUE;
+        else
+            throw new UnsupportedOperationException(teamColor + "Is An Invalid Team Color");
 
         BaseRobot.initOpMode(opMode, hardwareMap, telemetry);
         RobotSubsystemManager robotSubsystemManager = RobotSubsystemManager.getInstance();
@@ -39,6 +42,7 @@ public class BaseJewelAuto {
     }
 
     public void run() {
+        if (opMode.isStopRequested() && !opMode.opModeIsActive() && !opMode.isStarted()) return;
         GameClock gameClock = RobotSubsystemManager.getInstance().getGameClock();
         jewelArm.setPosition(JewelArm.ArmPosition.DOWN);
         gameClock.delay(0.7);
@@ -46,17 +50,26 @@ public class BaseJewelAuto {
         telemetry.addData("Color Detected: ", colorDetected);
         telemetry.update();
 
+        if (colorDetected == XbotColorSensor.Color.OTHER) {
+            telemetry.addData(this.getClass().getName() + ": ", "AUTO KILLED");
+            telemetry.update();
+            RobotSubsystemManager.getInstance().stop();
+            return;
+        }
+
         if (colorToTakeDown == colorDetected)
             drive.turn(Drive.TurnDirection.RIGHT, Drive.DrivePower.FULL);
         else
             drive.turn(Drive.TurnDirection.LEFT, Drive.DrivePower.FULL);
+
 
         gameClock.delay(0.7);
 
         drive.stop();
         jewelArm.setPosition(JewelArm.ArmPosition.UP);
 
-        gameClock.delay(1.0);
+        gameClock.delay(2.0);
+        RobotSubsystemManager.getInstance().stop();
     }
 
     public XbotColorSensor getXbotColorSensor() {
@@ -73,7 +86,10 @@ public class BaseJewelAuto {
 
     private XbotColorSensor.Color keepDetectingUntilColorFound(XbotColorSensor colorSensor) {
         XbotColorSensor.Color currentColor = colorSensor.getCurrentColorSeen();
-        while (currentColor == XbotColorSensor.Color.OTHER && opMode.opModeIsActive()) {
+        while (currentColor == XbotColorSensor.Color.OTHER
+                && opMode.opModeIsActive()
+                && RobotSubsystemManager.getInstance().getGameClock().getTimeElapsed() < 25.0) {
+            if (opMode.isStopRequested()) return XbotColorSensor.Color.OTHER;
             currentColor = colorSensor.getCurrentColorSeen();
             if (currentColor != XbotColorSensor.Color.OTHER)
                 break;
